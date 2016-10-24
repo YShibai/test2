@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Git支援システム</title>
+<!--
+  <link rel="stylesheet" type="text/css" href="./test/sitemapstyler.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="./test/sitemapstyler2.css" media="screen" />
+<script type="text/javascript" src="./test/sitemapstyler.js"></script>
+<script type="text/javascript" src="./test/sitemapstyler2.js"></script>
+<script type="text/javascript">
+    window.onload=function(){
+        sitemapstyler();
+        sitemapstyler2();
+    }
+</script>
+//-->
+<script>
+    //ユーザネーム登録処理
+    function Name_su(){
+        var UserName = document.user.username.value;
+        exec('git config --global user.name "' + UserName +'"' , function (error, stdout, stderr) {
+                if(error == null){
+                  document.getElementById('chk_name').innerHTML = "ユーザ名："+ UserName +"<br>";
+                  //location.reload();
+                }
+            });
+    }
+    //ユーザネーム入力欄消去処理
+    function clr_Name(){
+      document.user.username.value = "";
+    }
+
+    //メールアドレス登録処理
+    function Email_su(){
+      var E_addr = document.mail.Email.value;
+      exec('git config --global user.email "' + E_addr +'"' , function (error, stdout, stderr) {
+              if(error == null){
+                document.getElementById('chk_address').innerHTML = "E-mail："+ E_addr +"<br>";
+                //location.reload();
+              }
+          });
+    }
+    //メールアドレス入力欄消去処理
+    function clr_Email(){
+      document.mail.Email.value = "";
+    }
+
+</script>
+
+<!--<webview id="githubSighUp" src="https://github.com/join" autosize="on"></webview>-->
+
+<link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+<body>
+<div id="pagebody">
+
+  <!-- ヘッダ -->
+<div id="header"><h1><a href="index.html">Git支援システム</a></h1></div>
+
+	<!-- メインメニュー -->
+	<ul id="menu">
+		<li id="menu01"><a href="#" title="以前の変更からさらに変更があったファイルの差分を保存します">差分を保存</a></li>
+		<li id="menu02"><a href="#">差分を管理</a></li>
+		<li id="menu03"><a href="#">差分を表示</a></li>
+		<li id="menu04"><a href="#">指定の差分に戻す</a></li>
+		<li id="menu05"><a href="#">ヘルプ</a></li>
+	</ul>
+
+	<!-- 左カラム(f_list) -->
+<div id="f_list">
+    <script src="app.js"></script>
+    <!--<script src="child_process.js"></script>-->
+<div id="res0">ver...</div>
+<div id="chk_name"></div>
+<div id="chk_address"></div>
+<div id="chk_hub"></div>
+    <p>今閲覧中のカレントディレクトリ</p>
+<div id="res1">ここに今のディレクトリパスを表示</div>
+<br>
+<div id="res2">指定ディレクトリ内のファイル・サブフォルダ表示</div>
+</div>
+
+  <!--　右カラム(det_zone) -->
+<div id="det_zone">
+
+  <div id="R_karam"></div>
+</div>
+
+<!-- フッタ -->
+<div id="footer">
+---
+</div>
+
+</div>
+</body>
+</html>
