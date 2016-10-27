@@ -78,10 +78,7 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
  }
 });
 
-//GitHubアカウント登録画面
-function SignUpGH(){
-  document.getElementById('det_zone').innnerHTML = "<webview id='githubSighUp' src='https://github.com/join' autosize='on'></webview>";
-}
+
 
 
 // 指定ディレクトリを検索して一覧を表示

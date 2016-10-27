@@ -15,6 +15,8 @@
     }
 </script>
 //-->
+<!--モジュールの宣言-->
+<script src="first.js"></script>
 <script>
     //ユーザネーム登録処理
     function Name_su(){
@@ -45,7 +47,6 @@
     function clr_Email(){
       document.mail.Email.value = "";
     }
-
 </script>
 
 <!--<webview id="githubSighUp" src="https://github.com/join" autosize="on"></webview>-->
@@ -74,7 +75,15 @@
 <div id="res0">ver...</div>
 <div id="chk_name"></div>
 <div id="chk_address"></div>
-<div id="chk_hub"></div>
+<div id="chk_hub">
+  <script>
+  //GitHubアカウント登録画面
+  function SignUpGH(){
+    document.getElementById('det_zone').innerHTML = "<webview id='githubSighUp' src='https://github.com/join' height='57%' width='60%'></webview>";
+  }
+  </script>
+GitHub未登録の場合,<font color='#ff0000'><a href='javascript:SignUpGH()'>ココ</a></font>から登録しよう！<br>
+</div>
     <p>今閲覧中のカレントディレクトリ</p>
 <div id="res1">ここに今のディレクトリパスを表示</div>
 <br>
@@ -83,7 +92,6 @@
 
   <!--　右カラム(det_zone) -->
 <div id="det_zone">
-
   <div id="R_karam"></div>
 </div>
 
