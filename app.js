@@ -15,12 +15,12 @@ var result ="";
 //Gitが導入されているかの確認
 exec('git --version' , function (error, stdout, stderr) {
         if(stdout){
-          result += stdout + "がインストールされています.";
+          result = stdout + "がインストールされています.";
         }
         if(stderr){
         }
         if (error !== null) {
-          result += 'Gitがインストールされていません.';
+          result = 'Gitがインストールされていません.';
         }
         document.getElementById('res0').innerHTML = result;
     });
@@ -98,17 +98,10 @@ fs.readdir(_dir, function(err, files){
     });
     //Gitの管轄下であるかをチェック
     exec('git status ' + _dir , function (error, stdout, stderr) {
-            if(stdout){
-                result += 'stdout: ' + stdout +'<br>';
-
-            }
-            if(stderr){
-                result += 'stderr: ' + stderr +'<br>';
-            }
             if (error !== null) {
-              result += 'Exec error: ' + error +'<br>';
+              result = 'カレントディレクトリはGitの管轄下に属していません';
             }else{
-              result += 'Success.';
+              result = 'カレントディレクトリはGitの管轄下にあります';
             }
             document.getElementById('footer').innerHTML = result;
         });
@@ -122,13 +115,13 @@ fs.readdir(_dir, function(err, files){
 function OpenFile(F_Name){
  result ="";
  fs.readFile(_dir + "\\" + F_Name, 'utf8', function(err, text){
-   var str = text;
+   /*var str = text;
     str = str.replace(/\r\n/g, "<br />");
-    str = str.replace(/(\n|\r)/g, "<br />");
-   document.getElementById('R_karam').innerHTML = "<b>＜" + F_Name + "＞</b>" + "<br>" + str + "<br>"+result;
-   document.getElementById('footer').innerHTML = "読み込み成功";
+    str = str.replace(/(\n|\r)/g, "<br />");*/
+   document.getElementById('title').innerHTML = "　　<b>＜" + F_Name + "＞</b>" + "<br>";
+   document.getElementById('det_zone').innerText = text;
    if(err == null){
-   document.getElementById('footer').innerHTML = err;
+     document.getElementById('footer').innerHTML = "\'"+ F_Name +"\' の読み込みに成功しました.";
   }
  });
 }
@@ -161,15 +154,15 @@ function GitInit(F_Name){
   result ="";
    exec('git init ' + _dir  + "\\" + F_Name + "\\", function (error, stdout, stderr) {
            if(stdout){
-               result += 'stdout: ' + stdout +'<br>';
+               result = 'stdout: ' + stdout +'<br>';
            }
            if(stderr){
-               result += 'stderr: ' + stderr +'<br>';
+               result = 'stderr: ' + stderr +'<br>';
            }
            if (error !== null) {
-             result += 'Exec error: ' + error +'<br>';
+             result = 'Exec error: ' + error +'<br>';
            }else{
-             result += 'Success.' + "フォルダ「" + F_Name + "」をGitの管理下に置きました";
+             result = 'Success.' + "フォルダ「" + F_Name + "」をGitの管理下に置きました";
            }
            document.getElementById('footer').innerHTML = result;
        });
@@ -181,13 +174,13 @@ function Add(){
       result ="";
        exec('git add --all ' + _dir + "\\", function (error, stdout, stderr) {
                if(stdout){
-                   result += 'stdout: ' + stdout +'<br>';
+                   result = 'stdout: ' + stdout +'<br>';
                }
                if(stderr){
-                   result += 'stderr: ' + stderr +'<br>';
+                   result = 'stderr: ' + stderr +'<br>';
                }
                if (error !== null) {
-                 result += 'Exec error: ' + error +'<br>';
+                 result = 'Exec error: ' + error +'<br>';
                }else{
                  //Commit();
                  document.getElementById('footer').innerHTML = "Add完了.";
@@ -202,15 +195,15 @@ function Add(){
                  else{
                    exec('git commit -m "' + detail + '" ' + _dir + "\\", function (error, stdout, stderr) {
                            if(stdout){
-                               result += 'stdout: ' + stdout +'<br>';
+                               result = 'stdout: ' + stdout +'<br>';
                            }
                            if(stderr){
-                               result += 'stderr: ' + stderr +'<br>';
+                               result = 'stderr: ' + stderr +'<br>';
                            }
                            if (error !== null) {
-                             result += 'Exec error: ' + error +'<br>';
+                             result = 'Exec error: ' + error +'<br>';
                            }else{
-                             result += 'Success.' + "フォルダ「" + F_Name + "」以下にファイルの以前からの差分を保存しました.";
+                             result = 'Success.' + "フォルダ「" + F_Name + "」以下にファイルの以前からの差分を保存しました.";
                            }
                            document.getElementById('footer').innerHTML = result;
                        });
@@ -229,15 +222,15 @@ var detail = prompt("[必須] 以前との変更点を入力してください."
     else{
       exec('git commit -m "' + detail + '" ' + _dir + "\\", function (error, stdout, stderr) {
               if(stdout){
-                  result += 'stdout: ' + stdout +'<br>';
+                  result = 'stdout: ' + stdout +'<br>';
               }
               if(stderr){
-                  result += 'stderr: ' + stderr +'<br>';
+                  result = 'stderr: ' + stderr +'<br>';
               }
               if (error !== null) {
-                result += 'Exec error: ' + error +'<br>';
+                result = 'Exec error: ' + error +'<br>';
               }else{
-                result += 'Success.' + "フォルダ「" + F_Name + "」以下にファイルの以前からの差分を保存しました.";
+                result = 'Success.' + "フォルダ「" + F_Name + "」以下にファイルの以前からの差分を保存しました.";
               }
               document.getElementById('footer').innerHTML = result;
           });
@@ -252,7 +245,6 @@ function SubDir(currentD){
     res = "";
 
     //1つ上のフォルダに戻る
-
     //初期化
      FolderInfo = new Array();
      FolderPath = "";
@@ -264,7 +256,6 @@ function SubDir(currentD){
       FolderPath += FolderInfo[FolderInfo.length - 2];
       res += "<a href='#' onClick='UpDir()'>上のフォルダへ戻る</a><br><br>";
 
-    // 指定ディレクトリを検索して一覧を表示
     fs.readdir(_dir, function(err, files){
         // filesの中身を繰り替えして出力
         files.forEach(function(file){
@@ -277,12 +268,10 @@ function SubDir(currentD){
               _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
               res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "･･･<a href='javascript:void(0)' onClick='GitInit("+ "\"" + file + "\"" + ")'>このフォルダ以下をGitの管轄下に置く</a>" + "<br>";
             }
-
-
         });
             document.getElementById('res1').innerHTML = _dir　+ "   <input type='button' name='commit' value='ファイルの差分保存を実行する' onClick='Add()'>";
             document.getElementById('res2').innerHTML = res;
-
+            document.getElementById('footer').innerHTML = "Load Success.";
     });
 
 }
@@ -304,7 +293,6 @@ function UpDir(){
         FolderPath += FolderInfo[FolderInfo.length - 2];
         res += "<a href='#' onClick='UpDir()'>上のフォルダへ戻る</a><br><br>";
 
-      // 指定ディレクトリを検索して一覧を表示
       fs.readdir(_dir, function(err, files){
           // filesの中身を繰り替えして出力
           files.forEach(function(file){
@@ -317,11 +305,9 @@ function UpDir(){
                 _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
                 res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "･･･<a href='javascript:void(0)' onClick='GitInit("+ "\"" + file + "\"" + ")'>このフォルダ以下をGitの管轄下に置く</a>" + "<br>";
               }
-
-
           });
               document.getElementById('res1').innerHTML = _dir　+ "";
               document.getElementById('res2').innerHTML = res;
-
+              document.getElementById('footer').innerHTML = "Load Success.";
       });
 }

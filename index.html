@@ -41,10 +41,12 @@
     function TestDiff(){
       exec('git diff remotes/test2/master ' , function (error, stdout, stderr) {
               if(error == null){
-                document.getElementById('det_zone').innerHTML = stdout;
+                document.getElementById('title').innerHTML = "<b>＜差分＞</b><br>"
+                document.getElementById('det_zone').innerText = stdout;
                 //location.reload();
               }
           });
+          document.getElementById('footer').innerHTML = "Load Success.";
     }
 </script>
 
@@ -90,8 +92,8 @@ GitHub未登録の場合,<font color='#ff0000'><a href='javascript:SignUpGH()'>�
 </div>
 
   <!--　右カラム(det_zone) -->
+<div id="title"></div>
 <div id="det_zone">
-  <div id="R_karam"></div>
 </div>
 
 <!-- フッタ -->
