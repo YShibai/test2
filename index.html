@@ -6,7 +6,24 @@
 
 <!--モジュールの宣言-->
 <script src="first.js"></script>
+<!--<link href="lib/bs/bootstrap.min.css" rel="stylesheet">
+<script src="lib/ace/ace.js"></script>
+<script src="lib/ace/mode-javascript.js"></script>
+<script src="lib/ace/theme-twilight.js"></script>
+<script src="editor.js"></script>
+-->
 <script>
+/*右カラムの縦幅リサイズ（左カラムに依存）*/
+  (function(){
+    var leftside = document.querySelector("#f_list");
+    var wid = leftside.style.height;
+    document.getElementById("det_zone").style.height = wid;
+  });
+  window.onresize = function(){
+    var leftside = document.querySelector("#f_list");
+    var wid = leftside.style.height;
+    document.getElementById("det_zone").style.height = wid;
+  }
     //ユーザネーム登録処理
     function Name_su(){
         var UserName = document.user.username.value;
@@ -41,13 +58,17 @@
     function TestDiff(){
       exec('git diff remotes/test2/master ' , function (error, stdout, stderr) {
               if(error == null){
-                document.getElementById('title').innerHTML = "<b>＜差分＞</b><br>"
-                document.getElementById('det_zone').innerText = stdout;
-                //location.reload();
+                  document.getElementById('title').innerHTML = "<b>＜差分＞</b><br>"
+                  document.getElementById('edit_zone').innerText = stdout;
+                  document.getElementById('footer').innerHTML = "Load Success.";
               }
           });
-          document.getElementById('footer').innerHTML = "Load Success.";
     }
+
+//前回保存した状態まで戻す
+function BeforeReset(){
+
+}
 </script>
 
 <!--<webview id="githubSighUp" src="https://github.com/join" autosize="on"></webview>-->
@@ -62,7 +83,7 @@
 
 	<!-- メインメニュー -->
 	<ul id="menu">
-		<li id="menu01"><a href="#" title="以前の変更からさらに変更があったファイルの差分を保存します">差分を保存</a></li>
+		<li id="menu01"><a href="javascript:void(0)" onClick="Add()" title="以前の変更からさらに変更があったファイルの差分を保存します">差分を保存</a></li>
 		<li id="menu02"><a href="#">差分を管理</a></li>
 		<li id="menu03"><a href="javascript:void(0)" onClick="TestDiff()">差分を表示</a></li>
 		<li id="menu04"><a href="#">指定の差分に戻す</a></li>
@@ -94,6 +115,16 @@ GitHub未登録の場合,<font color='#ff0000'><a href='javascript:SignUpGH()'>�
   <!--　右カラム(det_zone) -->
 <div id="title"></div>
 <div id="det_zone">
+  <div id="commit"><b>＜差分保存の際の変更点記入欄＞</b><br>差分の保存メニューを押す前にココへ以前からの変更点を大まかに記入してください<br>例）○○○を実装, xxxのバグを修正 etc<br>
+    <textarea id="c_det" cols="40" rows="3"></textarea>
+  </div>
+<div id="header_fixed">
+  <button type='button' onClick='saveFile()'>保存</button>
+</div>
+<div id='footer_fixed'></div>
+<div id='input_area'>
+  <textarea id="edit_zone" cols="50" rows="20"></textarea>
+</div>
 </div>
 
 <!-- フッタ -->

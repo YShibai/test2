@@ -10,7 +10,7 @@ const electron = require("electron");
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 let mainWindow;
-
+let editWindows;
 
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {

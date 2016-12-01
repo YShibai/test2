@@ -109,14 +109,14 @@ div#det_zone {
   height: 57%;
   width:60%; margin:2% 0px 10px 0px; padding-left:25px;/*幅の指定と位置調整*/
 	float:right;				/*2カラム全体を右寄せにする*/
+	overflow: scroll;
 }
-
 
 /*============================================
 フッタ
 ============================================*/
 div#footer {
-  bottom: 0;
+  bottom: 0px;
 	width: 100%; height:5%; text-align:left; padding:5px;
 	clear:both;					/*回り込みを解除する*/
 	/*background-image:url("images/bg_footer.jpg");	フッタ部分の背景画像*/

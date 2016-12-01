@@ -11,7 +11,6 @@ var FolderPath = "";
 var exec = require('child_process').exec;
 var result ="";
 
-
 //Gitが導入されているかの確認
 exec('git --version' , function (error, stdout, stderr) {
         if(stdout){
@@ -19,12 +18,16 @@ exec('git --version' , function (error, stdout, stderr) {
         }
         if(stderr){
         }
-        if (error !== null) {
-          result = 'Gitがインストールされていません.';
+        if (error != null) {
+          result = "Gitがインストールされていません.<br><a href='javascript:InstallGit()'>ココ</a>を押してGitインストーラを起動してインストールして下さい";
         }
         document.getElementById('res0').innerHTML = result;
     });
-
+    //Gitのインストーラの起動と
+    function InstallGit(){
+      exec(__dirname +"\\git\\Git.exe", function(error, stdout, stderr){
+      });
+    }
 
     //ユーザ名が登録されているかの確認
     exec('git config user.name' , function (error, stdout, stderr) {
@@ -83,7 +86,6 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
 
 // 指定ディレクトリを検索して一覧を表示
 fs.readdir(_dir, function(err, files){
-
     // filesの中身を繰り替えして出力
     files.forEach(function(file){
         var _type = "";
@@ -98,7 +100,7 @@ fs.readdir(_dir, function(err, files){
     });
     //Gitの管轄下であるかをチェック
     exec('git status ' + _dir , function (error, stdout, stderr) {
-            if (error !== null) {
+            if (error != null) {
               result = 'カレントディレクトリはGitの管轄下に属していません';
             }else{
               result = 'カレントディレクトリはGitの管轄下にあります';
@@ -112,20 +114,99 @@ fs.readdir(_dir, function(err, files){
 
 
 //ファイルをアプリ内に読み込んで表示させる.
+var currentPath = "";
 function OpenFile(F_Name){
  result ="";
  fs.readFile(_dir + "\\" + F_Name, 'utf8', function(err, text){
+   currentPath = _dir + "\\" + F_Name;
    /*var str = text;
     str = str.replace(/\r\n/g, "<br />");
     str = str.replace(/(\n|\r)/g, "<br />");*/
-   document.getElementById('title').innerHTML = "　　<b>＜" + F_Name + "＞</b>" + "<br>";
-   document.getElementById('det_zone').innerText = text;
+   document.getElementById('title').innerHTML = "　　<b>＜" + F_Name + "＞</b>" + "<br>"+ currentPath +"<br>";
+   document.getElementById('edit_zone').innerText = text;
    if(err == null){
      document.getElementById('footer').innerHTML = "\'"+ F_Name +"\' の読み込みに成功しました.";
   }
  });
 }
+/**
+ * ファイルを保存する
+ */
+function saveFile() {
+	/*　初期の入力エリアに設定されたテキストを保存しようとしたときは新規ファイルを作成する*/
+	if (currentPath == "") {
+		saveNewFile();
+		return;
+	}
+	var win = remote.getCurrentWindow();
+	dialog.showMessageBox(win, {
+			title: 'ファイルの上書き保存を行います。',
+			type: 'info',
+			buttons: ['OK', 'Cancel'],
+			detail: '本当に保存しますか？'
+		},
+		/* メッセージボックスが閉じられた後のコールバック関数*/
+		function (respnse) {
+			/* OKボタン(ボタン配列の0番目がOK)*/
+			if (respnse == 0) {
+				var data = document.getElementById('edit_zone').value;
+				writeFile(data);
+			}
+		}
+	);
+}
 
+/**
+ * ファイルを書き込む
+ */
+var tmp_Path = null;
+function writeFile(data) {
+  if(tmp_Path!=null){
+    fs.writeFile(tmp_Path, data, function (error) {
+  		if (error != null) {
+  			alert('保存しました');
+  		}
+  	});
+    document.getElementById('title').innerText = tmp_Path;
+    currentPath = tmp_Path;
+    tmp_Path = null;
+      return;
+  }
+	fs.writeFile(currentPath, data, function (error) {
+		if (error != null) {
+			alert('error : ' + error);
+			return;
+		}
+	});
+}
+
+/**
+ * 新規ファイルを保存する
+ */
+function saveNewFile() {
+	var win = remote.getCurrentWindow();
+	dialog.showSaveDialog(
+		win,
+		/* どんなダイアログを出すかを指定するプロパティ*/
+		{
+			properties: ['openFile'],
+			filters: [
+				{
+					name: 'Documents',
+					extensions: ['txt', 'text', 'html', 'js']
+				}
+			]
+		},
+		/* セーブ用ダイアログが閉じられた後のコールバック関数*/
+		function (fileName) {
+			if (fileName) {
+				var data = document.getElementById('edit_zone').value;
+				tmp_Path = fileName;
+				writeFile(data);
+			}
+		}
+	);
+}
 
 //ファイルを既定のアプリで開かせる
 /*
@@ -170,71 +251,43 @@ function GitInit(F_Name){
 
 //git add の実行処理
 function Add(){
-    // 内容が書き込まれている場合はコミット処理実行
+    /* 内容が書き込まれている場合はコミット処理実行*/
       result ="";
-       exec('git add --all ' + _dir + "\\", function (error, stdout, stderr) {
-               if(stdout){
-                   result = 'stdout: ' + stdout +'<br>';
-               }
-               if(stderr){
-                   result = 'stderr: ' + stderr +'<br>';
-               }
-               if (error !== null) {
-                 result = 'Exec error: ' + error +'<br>';
-               }else{
-                 //Commit();
-                 document.getElementById('footer').innerHTML = "Add完了.";
-               }
-
-               // 入力ダイアログを表示 ＋ 入力内容を detail に代入
-             var detail = prompt("[必須] 以前との変更点を入力してください.", "変更内容");
-                 // 入力内容が一致しない場合は警告ダイアログを表示
-                 if(detail == "" && detail == null){
-                   alert('キャンセルされました');
-                 }
-                 else{
-                   exec('git commit -m "' + detail + '" ' + _dir + "\\", function (error, stdout, stderr) {
-                           if(stdout){
-                               result = 'stdout: ' + stdout +'<br>';
-                           }
-                           if(stderr){
-                               result = 'stderr: ' + stderr +'<br>';
-                           }
-                           if (error !== null) {
-                             result = 'Exec error: ' + error +'<br>';
-                           }else{
-                             result = 'Success.' + "フォルダ「" + F_Name + "」以下にファイルの以前からの差分を保存しました.";
-                           }
-                           document.getElementById('footer').innerHTML = result;
-                       });
-                 }
-           });
+      var win = remote.getCurrentWindow();
+    	dialog.showMessageBox(win, {
+    			title: 'カレントディレクトリ内で更新されたファイルの差分を保存します',
+    			type: 'info',
+    			buttons: ['OK', 'Cancel'],
+    			detail: '保存しますか？'
+    		},
+    		/* メッセージボックスが閉じられた後のコールバック関数*/
+    		function (respnse) {
+    			/* OKボタン(ボタン配列の0番目がOK)*/
+    			if (respnse == 0) {
+            exec('git add --all ' + _dir + "\\", function (error, stdout, stderr) {
+                    if (error == null) {
+                      Commit();
+                    }else{
+                      result = 'Exec error: ' + error +'<br>';
+                      document.getElementById('footer').innerHTML = result;
+                    }
+                });
+    			}
+    		}
+    	);
 }
 
 //git commit の実行処理
 function Commit(){
-  // 入力ダイアログを表示 ＋ 入力内容を detail に代入
-var detail = prompt("[必須] 以前との変更点を入力してください.", "変更内容");
-    // 入力内容が一致しない場合は警告ダイアログを表示
-    if(detail == "" && detail == null){
-      alert('キャンセルされました');
-    }
-    else{
+  var detail = document.getElementById('c_det').value;
       exec('git commit -m "' + detail + '" ' + _dir + "\\", function (error, stdout, stderr) {
-              if(stdout){
-                  result = 'stdout: ' + stdout +'<br>';
-              }
-              if(stderr){
-                  result = 'stderr: ' + stderr +'<br>';
-              }
-              if (error !== null) {
-                result = 'Exec error: ' + error +'<br>';
+              if (error == null) {
+                result = 'Success.' + "カレントディレクトリ以下で更新があったファイルの差分を保存しました.";
               }else{
-                result = 'Success.' + "フォルダ「" + F_Name + "」以下にファイルの以前からの差分を保存しました.";
+                result = 'Exec error: ' + error +'<br>';
               }
               document.getElementById('footer').innerHTML = result;
           });
-    }
 }
 
 //下の階層のディレクトリを検索・一覧表示
@@ -273,12 +326,10 @@ function SubDir(currentD){
             document.getElementById('res2').innerHTML = res;
             document.getElementById('footer').innerHTML = "Load Success.";
     });
-
 }
 
 //上の階層のディレクトリを検索・一覧表示
 function UpDir(){
-
       _dir = FolderPath;
       res = "";
               document.getElementById('res1').innerHTML = _dir;
