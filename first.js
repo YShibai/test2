@@ -28,4 +28,3 @@ var FolderInfo = new Array();
 var FolderPath = "";
 var exec = require('child_process').exec;
 var result ="";
-/*testes*/
