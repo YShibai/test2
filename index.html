@@ -54,21 +54,17 @@
       document.mail.Email.value = "";
     }
 
-    //リモートリポジトリとローカルのデータの差分比較
-    function TestDiff(){
-      exec('git diff remotes/test2/master ' , function (error, stdout, stderr) {
+    //前のコミット段階のデータとの差分比較
+    function Diff(){
+      exec('git diff' , function (error, stdout, stderr) {
               if(error == null){
+                var re = /[@]+.*[@]+/;
                   document.getElementById('title').innerHTML = "<b>＜差分＞</b><br>"
-                  document.getElementById('edit_zone').innerText = stdout;
+                  document.getElementById('edit_zone').innerText = stdout.match(re);
                   document.getElementById('footer').innerHTML = "Load Success.";
               }
           });
     }
-
-//前回保存した状態まで戻す
-function BeforeReset(){
-
-}
 </script>
 
 <!--<webview id="githubSighUp" src="https://github.com/join" autosize="on"></webview>-->
@@ -85,8 +81,8 @@ function BeforeReset(){
 	<ul id="menu">
 		<li id="menu01"><a href="javascript:void(0)" onClick="Add()" title="以前の変更からさらに変更があったファイルの差分を保存します">差分を保存</a></li>
 		<li id="menu02"><a href="#">差分を管理</a></li>
-		<li id="menu03"><a href="javascript:void(0)" onClick="TestDiff()">差分を表示</a></li>
-		<li id="menu04"><a href="#">指定の差分に戻す</a></li>
+		<li id="menu03"><a href="javascript:void(0)" onClick="Push()">サーバにアップ</a></li>
+		<li id="menu04"><a href="javascript:void(0)" onClick="Reset()">前回のｺﾐｯﾄ状態に戻す</a></li>
 		<li id="menu05"><a href="#">ヘルプ</a></li>
 	</ul>
 

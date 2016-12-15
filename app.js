@@ -290,6 +290,33 @@ function Commit(){
           });
 }
 
+//リモートリポジトリへPush
+function Push(){
+  exec('git push test2',function(error, stdout, stderr){
+    if(error == null){
+      document.getElementById('footer').innerHTML = "リモートリポジトリへプッシュしました";
+    }
+  });
+}
+
+function Pull(){
+  exec('git pull ', function(error, stdout, stderr){
+
+  });
+}
+
+
+//ひとつ前のコミット状態へ戻す（reset）
+function Reset(){
+  exec('git reset --hard HEAD^', function(error, stdout, stderr){
+    if(error == null){
+      document.getElementById('footer').innerHTML = "１つ前のコミット時の状態に戻りました";
+    }
+  });
+}
+
+
+
 //下の階層のディレクトリを検索・一覧表示
 function SubDir(currentD){
   //前のカレントディレクトディレクトリに掘り下げたディレクトリを追加
