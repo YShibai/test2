@@ -19,11 +19,25 @@ exec('git --version' , function (error, stdout, stderr) {
         if(stderr){
         }
         if (error != null) {
-          result = "Gitがインストールされていません.<br><a href='javascript:InstallGit()'>ココ</a>を押してGitインストーラを起動してインストールして下さい";
+          var win = remote.getCurrentWindow();
+          dialog.showMessageBox(win, {
+              title: 'Gitのインストールについて',
+              type: 'info',
+              buttons: ['はい', 'いいえ'],
+              detail: 'Gitがインストールされていません.インストーラを起動しますか？'
+            },
+            /* メッセージボックスが閉じられた後のコールバック関数*/
+            function (respnse) {
+              /* OKボタン(ボタン配列の0番目がOK)*/
+              if (respnse == 0) {
+                InstallGit();
+              }
+            }
+          );
         }
         document.getElementById('res0').innerHTML = result;
     });
-    //Gitのインストーラの起動と
+    //Gitのインストーラの起動
     function InstallGit(){
       exec(__dirname +"\\git\\Git.exe", function(error, stdout, stderr){
       });
@@ -101,11 +115,10 @@ fs.readdir(_dir, function(err, files){
     //Gitの管轄下であるかをチェック
     exec('git status ' + _dir , function (error, stdout, stderr) {
             if (error != null) {
-              result = 'カレントディレクトリはGitの管轄下に属していません';
+              document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
             }else{
-              result = 'カレントディレクトリはGitの管轄下にあります';
+              document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #008000;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
             }
-            document.getElementById('footer').innerHTML = result;
         });
       document.getElementById('res1').innerHTML = _dir　+ "";
       document.getElementById('res2').innerHTML = res;
@@ -231,9 +244,9 @@ function OpenFile(F_Name){
 
 
 //git init の実行処理
-function GitInit(F_Name){
+function GitInit(){
   result ="";
-   exec('git init ' + _dir  + "\\" + F_Name + "\\", function (error, stdout, stderr) {
+   exec('git init ' + _dir, function (error, stdout, stderr) {
            if(stdout){
                result = 'stdout: ' + stdout +'<br>';
            }
@@ -243,7 +256,7 @@ function GitInit(F_Name){
            if (error !== null) {
              result = 'Exec error: ' + error +'<br>';
            }else{
-             result = 'Success.' + "フォルダ「" + F_Name + "」をGitの管理下に置きました";
+             result = 'Success.' + "カレントディレクトリをGitの管理下に置きました";
            }
            document.getElementById('footer').innerHTML = result;
        });
@@ -349,7 +362,15 @@ function SubDir(currentD){
               res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "･･･<a href='javascript:void(0)' onClick='GitInit("+ "\"" + file + "\"" + ")'>このフォルダ以下をGitの管轄下に置く</a>" + "<br>";
             }
         });
-            document.getElementById('res1').innerHTML = _dir　+ "   <input type='button' name='commit' value='ファイルの差分保存を実行する' onClick='Add()'>";
+        //Gitの管轄下であるかをチェック
+        exec('git status ' + _dir , function (error, stdout, stderr) {
+                if (error != null) {
+                  document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
+                }else{
+                  document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #008000;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+                }
+            });
+            document.getElementById('res1').innerHTML = _dir;
             document.getElementById('res2').innerHTML = res;
             document.getElementById('footer').innerHTML = "Load Success.";
     });
@@ -384,7 +405,15 @@ function UpDir(){
                 res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "･･･<a href='javascript:void(0)' onClick='GitInit("+ "\"" + file + "\"" + ")'>このフォルダ以下をGitの管轄下に置く</a>" + "<br>";
               }
           });
-              document.getElementById('res1').innerHTML = _dir　+ "";
+          //Gitの管轄下であるかをチェック
+          exec('git status ' + _dir , function (error, stdout, stderr) {
+                  if (error != null) {
+                    document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
+                  }else{
+                    document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #008000;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+                  }
+              });
+              document.getElementById('res1').innerHTML = _dir;
               document.getElementById('res2').innerHTML = res;
               document.getElementById('footer').innerHTML = "Load Success.";
       });

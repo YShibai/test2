@@ -92,7 +92,6 @@
 	<!-- 左カラム(f_list) -->
 <div id="f_list">
     <script src="app.js"></script>
-    <!--<script src="child_process.js"></script>-->
 <div id="res0">ver...</div>
 <div id="chk_name"></div>
 <div id="chk_address"></div>
@@ -100,13 +99,14 @@
   <script>
   //GitHubアカウント登録画面
   function SignUpGH(){
-    document.getElementById('det_zone').innerHTML = "<webview id='githubSighUp' src='https://github.com/join' height='57%' width='60%'></webview>";
+    document.getElementById('det_zone').innerHTML = "<webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview>";
   }
   </script>
 GitHub未登録の場合,<font color='#ff0000'><a href='javascript:SignUpGH()'>ココ</a></font>から登録しよう！<br>
 </div>
     <p>今閲覧中のカレントディレクトリ</p>
 <div id="res1">ここに今のディレクトリパスを表示</div>
+<div id="Init_Info">ここにInit情報を表示</div>
 <br>
 <div id="res2">指定ディレクトリ内のファイル・サブフォルダ表示</div>
 </div>
@@ -114,15 +114,15 @@ GitHub未登録の場合,<font color='#ff0000'><a href='javascript:SignUpGH()'>�
   <!--　右カラム(det_zone) -->
 <div id="title"></div>
 <div id="det_zone">
-  <div id="commit"><b>＜差分保存の際の変更点記入欄＞</b><br>差分の保存メニューを押す前にココへ以前からの変更点を大まかに記入してください<br>例）○○○を実装, xxxのバグを修正 etc<br>
-    <textarea id="c_det" cols="40" rows="3"></textarea>
-  </div>
 <div id="header_fixed">
   <button type='button' onClick='saveFile()'>保存</button>
 </div>
 <div id='footer_fixed'></div>
 <div id='input_area'>
   <textarea id="edit_zone" cols="50" rows="20"></textarea>
+</div>
+<div id="commit"><b>＜差分保存の際の変更点記入欄＞</b><br>差分の保存メニューを押す前にココへ以前からの変更点を大まかに記入してください<br>例）○○○を実装, xxxのバグを修正 etc<br>
+  <textarea id="c_det" cols="40" rows="3"></textarea>
 </div>
 </div>
 
