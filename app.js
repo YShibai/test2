@@ -109,7 +109,7 @@ fs.readdir(_dir, function(err, files){
         //    _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
         }else{
             _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
-            res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "･･･<a href='javascript:void(0)' onClick='GitInit("+ "\"" + file + "\"" + ")'>このフォルダ以下をGitの管轄下に置く</a>" + "<br>";
+            res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
         }
     });
     //Gitの管轄下であるかをチェック
@@ -359,7 +359,7 @@ function SubDir(currentD){
               _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
             }else{
               _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
-              res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "･･･<a href='javascript:void(0)' onClick='GitInit("+ "\"" + file + "\"" + ")'>このフォルダ以下をGitの管轄下に置く</a>" + "<br>";
+              res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
             }
         });
         //Gitの管轄下であるかをチェック
@@ -402,7 +402,7 @@ function UpDir(){
                 _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
               }else{
                 _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
-                res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "･･･<a href='javascript:void(0)' onClick='GitInit("+ "\"" + file + "\"" + ")'>このフォルダ以下をGitの管轄下に置く</a>" + "<br>";
+                res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
               }
           });
           //Gitの管轄下であるかをチェック
