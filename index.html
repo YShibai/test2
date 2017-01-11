@@ -24,35 +24,7 @@
     var wid = leftside.style.height;
     document.getElementById("det_zone").style.height = wid;
   }
-    //ユーザネーム登録処理
-    function Name_su(){
-        var UserName = document.user.username.value;
-        exec('git config --global user.name "' + UserName +'"' , function (error, stdout, stderr) {
-                if(error == null){
-                  document.getElementById('chk_name').innerHTML = "ユーザ名："+ UserName +"<br>";
-                  //location.reload();
-                }
-            });
-    }
-    //ユーザネーム入力欄消去処理
-    function clr_Name(){
-      document.user.username.value = "";
-    }
 
-    //メールアドレス登録処理
-    function Email_su(){
-      var E_addr = document.mail.Email.value;
-      exec('git config --global user.email "' + E_addr +'"' , function (error, stdout, stderr) {
-              if(error == null){
-                document.getElementById('chk_address').innerHTML = "E-mail："+ E_addr +"<br>";
-                //location.reload();
-              }
-          });
-    }
-    //メールアドレス入力欄消去処理
-    function clr_Email(){
-      document.mail.Email.value = "";
-    }
 
     //前のコミット段階のデータとの差分比較
     function Diff(){
@@ -99,7 +71,7 @@
   <script>
   //GitHubアカウント登録画面
   function SignUpGH(){
-    document.getElementById('det_zone').innerHTML = "<webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview>";
+    document.getElementById('det_zone').innerHTML = "<webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='登録' onClick='SetRepo()'><br></form>";
   }
   </script>
 GitHub未登録の場合,<font color='#ff0000'><a href='javascript:SignUpGH()'>ココ</a></font>から登録しよう！<br>

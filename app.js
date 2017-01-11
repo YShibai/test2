@@ -43,44 +43,6 @@ exec('git --version' , function (error, stdout, stderr) {
       });
     }
 
-    //ユーザ名が登録されているかの確認
-    exec('git config user.name' , function (error, stdout, stderr) {
-            if(stdout){
-              document.getElementById('chk_name').innerHTML = "ユーザ名："+ stdout +"<br>";
-            }
-            if(error){
-              document.getElementById('chk_name').innerHTML = "ユーザ名が登録されていません.<br><form name='user'><input type='text' name='username' value=''> <input type='button' value='登録' onClick='Name_su()'> <input type='button' value='消去' onClick='clr_Name()'><br></form>";
-              //ユーザネーム登録処理
-              function Name_su(){
-                  var UserName = document.user.username.value;
-                  document.getElementById('chk_name').innerHTML = "ユーザ名："+ UserName +"<br>";
-              }
-              //ユーザネーム入力欄消去処理
-              function clr_Name(){
-                document.user.username.value = "";
-              }
-            }
-        });
-
-    //メールアドレスが登録されているかの確認
-        exec('git config user.email' , function(error, stdout, stderr){
-          if(stdout){
-            document.getElementById('chk_address').innerHTML = "E-Mail："+ stdout +"<br>";
-          }
-          if(error){
-            document.getElementById('chk_address').innerHTML = "E-Mailが登録されていません.<br><form name='mail'><input type='text' name='Email' value=''> <input type='button' value='登録' onClick='Email_su()'> <input type='button' value='消去' onClick='clr_Email()'><br></form>";
-            //メールアドレス登録処理
-            function Email_su(){
-              var E_addr = document.mail.Email.value;
-              document.getElementById('chk_address').innerHTML = "E-Mail："+ E_addr +"<br>";
-            }
-            //メールアドレス入力欄消去処理
-            function clr_Email(){
-              document.mail.Email.value = "";
-            }
-          }
-        });
-
 
 //GitHubアカウントの新規登録画面の処理
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
@@ -94,8 +56,6 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   document.getElementById('footer').innerHTML = err;
  }
 });
-
-
 
 
 // 指定ディレクトリを検索して一覧を表示
@@ -117,7 +77,7 @@ fs.readdir(_dir, function(err, files){
             if (error != null) {
               document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
             }else{
-              document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #008000;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+              document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
             }
         });
       document.getElementById('res1').innerHTML = _dir　+ "";
@@ -221,27 +181,6 @@ function saveNewFile() {
 	);
 }
 
-//ファイルを既定のアプリで開かせる
-/*
-function OpenFile(F_Name){
- result ="";
-  exec(_dir  + "\\" + F_Name, function (error, stdout, stderr) {
-          if(stdout){
-              result += 'stdout: ' + stdout +'<br>';
-          }
-          if(stderr){
-              result += 'stderr: ' + stderr +'<br>';
-          }
-          if (error !== null) {
-            result += 'Exec error: ' + error +'<br>';
-          }else{
-            result += 'Success.';
-          }
-          document.getElementById('res5').innerHTML = result;
-      });
-}
-*/
-
 
 //git init の実行処理
 function GitInit(){
@@ -303,8 +242,21 @@ function Commit(){
           });
 }
 
+
+//リモートリポジトリのセット
+function SetRepo(){
+  var RepoURI = document.repo.Reposit.value;
+  exec('git remote add test2 ' + RepoURI , function (error, stdout, stderr) {
+          if(error == null){
+            document.getElementById('footer').innerHTML = "リモートリポジトリ："+ E_addr +"を登録しました";
+            //location.reload();
+          }
+      });
+}
+
 //リモートリポジトリへPush
 function Push(){
+
   exec('git push test2',function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリへプッシュしました";
@@ -367,7 +319,7 @@ function SubDir(currentD){
                 if (error != null) {
                   document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
                 }else{
-                  document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #008000;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+                  document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
                 }
             });
             document.getElementById('res1').innerHTML = _dir;
@@ -410,7 +362,7 @@ function UpDir(){
                   if (error != null) {
                     document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
                   }else{
-                    document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #008000;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+                    document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
                   }
               });
               document.getElementById('res1').innerHTML = _dir;
