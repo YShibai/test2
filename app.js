@@ -256,13 +256,6 @@ function SetRepo(){
 
 //リモートリポジトリへPush
 function Push(){
-  exec('git checkout master',function(error, stdout, stderr){
-    if(error == null){
-      Push2();
-    }
-  });
-}
-function Push2(){
   exec('git push test2 master',function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリへプッシュしました";
