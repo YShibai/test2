@@ -258,7 +258,7 @@ function SetRepo(){
 function Push(){
   exec('git checkout master',function(error, stdout, stderr){
     if(error == null){
-      Push2();fgyuafgkuysgafkuyawegugeuftiwurgvfuvyecvgukfyvegcfauy
+      Push2();
     }
   });
 }
