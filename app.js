@@ -254,7 +254,7 @@ function SetRepo(){
       });
 }
 
-//リモートリポジトリへPush
+//リモートリポジトリへPushする
 function Push(){
   exec('git push test2 master',function(error, stdout, stderr){
     if(error == null){
