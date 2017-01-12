@@ -258,14 +258,17 @@ function SetRepo(){
 function Push(){
   exec('git push test2 master',function(error, stdout, stderr){
     if(error == null){
-      document.getElementById('footer').innerHTML = "リモートリポジトリへプッシュしました";
+      document.getElementById('footer').innerHTML = "リモートリポジトリへアップロードしました";
     }
   });
 }
 
+//リモートリポジトリからPullする
 function Pull(){
-  exec('git pull ', function(error, stdout, stderr){
-
+  exec('git pull test2 master', function(error, stdout, stderr){
+    if(error == null){
+      document.getElementById('footer').innerHTML = "リモートリポジトリから同期しました";
+    }
   });
 }
 
@@ -274,7 +277,7 @@ function Pull(){
 function Reset(){
   exec('git reset --hard HEAD^', function(error, stdout, stderr){
     if(error == null){
-      document.getElementById('footer').innerHTML = "１つ前のコミット時の状態に戻りました";
+      document.getElementById('footer').innerHTML = "最新のコミット時の状態に戻りました";
     }
   });
 }
