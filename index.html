@@ -27,8 +27,8 @@
 
 
     //前のコミット段階のデータとの差分比較
-    function Diff(){
-      exec('git diff' , function (error, stdout, stderr) {
+    function Diff(F_Name){
+      exec('git diff '+ _dir + '\\' + F_Name, function (error, stdout, stderr) {
               if(error == null){
                 var re = /[@][@].[-](.*?),(.*?)\+(.*?),(.*?)[@][@]/g;
                 var match = stdout.match(re);
@@ -39,21 +39,22 @@
                 match2[i] = match[i].match(re2);
                 i++;
               }
-              var DiffInfo = match.length + "箇所に変更がある。\n";
+              var DiffInfo = match.length + "箇所に変更があります。\n";
+              var DiffInfo2 = "";
               var j =0;
               while(j<match.length){
-                DiffInfo +=j+1 +"箇所目は"+ match2[j][1] + "行目から" + match2[j][2] + "行分にかけて変更があり、";
+                DiffInfo2 +=j+1 +"箇所目は変更前に"+ match2[j][1] + "行目から" + match2[j][2] + "行分あったところが、変更により";
                 if(match2[j][4]-match2[j][2] < 0){
-                  DiffInfo += Math.abs(match2[j][4]-match2[j][2]) + "行減少しました。\n";
+                  DiffInfo2 += Math.abs(match2[j][4]-match2[j][2]) + "行減少しました。\n";
                 }else if (match2[j][4]-match2[j][2] > 0) {
-                  DiffInfo += Math.abs(match2[j][4]-match2[j][2]) + "行増加しました。\n";
+                  DiffInfo2 += Math.abs(match2[j][4]-match2[j][2]) + "行増加しました。\n";
                 }else{
-                  DiffInfo += "行数に変化はありません。\n";
+                  DiffInfo2 += "行数の変化はありませんが、中身が書き換わっています。\n";
                 }
                 j++;
               }
                   document.getElementById('title').innerHTML = "<b>＜差分＞</b><br>"
-                  document.getElementById('edit_zone').innerText = DiffInfo;
+                  document.getElementById('edit_zone').innerText = DiffInfo+DiffInfo2+stdout;
                   document.getElementById('footer').innerHTML = "Load Success.";
               }
           });

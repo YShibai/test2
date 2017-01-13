@@ -60,18 +60,16 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
 
 // 指定ディレクトリを検索して一覧を表示
 fs.readdir(_dir, function(err, files){
-    // filesの中身を繰り替えして出力
-    files.forEach(function(file){
-        var _type = "";
-        if(fs.statSync(_dir + "\\" + file).isFile()){
-            _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
-            res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + "<br>";
-        //    _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
-        }else{
-            _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
-            res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
-        }
-    });
+  files.forEach(function(file){
+      var _type = "";
+      if(fs.statSync(_dir + "\\" + file).isFile()){
+          _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+          res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
+      }else{
+          _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
+          res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
+      }
+  });
     //Gitの管轄下であるかをチェック
     exec('git status ' + _dir , function (error, stdout, stderr) {
             if (error != null) {
@@ -309,8 +307,8 @@ function SubDir(currentD){
             var _type = "";
             if(fs.statSync(_dir + "\\" + file).isFile()){
               _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
-              res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + "<br>";
-              _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
+              res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
+              //_type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
             }else{
               _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
               res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
@@ -352,8 +350,8 @@ function UpDir(){
               var _type = "";
               if(fs.statSync(_dir + "\\" + file).isFile()){
                 _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
-                res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + "<br>";
-                _type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
+                res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
+                //_type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
               }else{
                 _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
                 res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
