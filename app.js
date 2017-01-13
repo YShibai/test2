@@ -240,7 +240,7 @@ function AddTmp(){
 }
 function CommitTmp(){
   var d = new Date();
-  exec('git commit -m "' + d.toLocaleString() + '"' + _dir + "\\", function (error, stdout, stderr) {
+  exec('git commit -m "' + d.toLocaleString() + '"', function (error, stdout, stderr) {
       });
       alert("差分を保存しました");
 }
