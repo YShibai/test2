@@ -1,16 +1,3 @@
-// fs
-var fs = require('fs');
-
-// 検索するディレクトリ
-//var _dir = __dirname + '\\dtree';
-var _dir ='C:\\Users\\Public\\Documents\\a';
-//var _dir ='D:\\';
-var res = "";
-var FolderInfo = new Array();
-var FolderPath = "";
-var exec = require('child_process').exec;
-var result ="";
-
 //Gitが導入されているかの確認
 exec('git --version' , function (error, stdout, stderr) {
         if(stdout){
@@ -59,29 +46,31 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
 
 
 // 指定ディレクトリを検索して一覧を表示
-fs.readdir(_dir, function(err, files){
-  files.forEach(function(file){
-      var _type = "";
-      if(fs.statSync(_dir + "\\" + file).isFile()){
-          _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
-          res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
-      }else{
-          _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
-          res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
-      }
+(function(){
+  _dir = fs.readFileSync(__dirname+"\\"+"last_dir.txt");
+  fs.readdir(_dir, function(err, files){
+    files.forEach(function(file){
+        var _type = "";
+        if(fs.statSync(_dir + "\\" + file).isFile()){
+            _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+            res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
+        }else{
+            _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
+            res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
+        }
+    });
+      //Gitの管轄下であるかをチェック
+      exec('git status ' + _dir , function (error, stdout, stderr) {
+              if (error != null) {
+                document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
+              }else{
+                document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+              }
+          });
+        document.getElementById('res1').innerHTML = _dir　+ "";
+        document.getElementById('res2').innerHTML = res;
   });
-    //Gitの管轄下であるかをチェック
-    exec('git status ' + _dir , function (error, stdout, stderr) {
-            if (error != null) {
-              document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
-            }else{
-              document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
-            }
-        });
-      document.getElementById('res1').innerHTML = _dir　+ "";
-      document.getElementById('res2').innerHTML = res;
-});
-
+})();
 
 
 //ファイルをアプリ内に読み込んで表示させる.
@@ -325,6 +314,7 @@ function SubDir(currentD){
             document.getElementById('res1').innerHTML = _dir;
             document.getElementById('res2').innerHTML = res;
             document.getElementById('footer').innerHTML = "Load Success.";
+            fs.writeFileSync(__dirname+"\\"+"last_dir.txt", _dir);
     });
 }
 
@@ -368,5 +358,6 @@ function UpDir(){
               document.getElementById('res1').innerHTML = _dir;
               document.getElementById('res2').innerHTML = res;
               document.getElementById('footer').innerHTML = "Load Success.";
+              fs.writeFileSync(__dirname+"\\"+"last_dir.txt", _dir);
       });
 }

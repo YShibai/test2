@@ -4,6 +4,7 @@ const { remote } = require('electron');
 const { BrowserWindow } = remote;
 const {dialog} = require('electron').remote;
 const {Menu} = require('electron').remote;
+const {app} = require('electron').remote;
 
 const template = [
   {label: 'すべて選択'},
@@ -21,7 +22,8 @@ window.addEventListener('contextmenu', function (e) {
 
 // 検索するディレクトリ
 //var _dir = __dirname + '\\dtree';
-var _dir ='C:\\Users\\Public\\Documents\\a';
+//var _dir ='C:\\Users\\Public\\Documents\\a';
+var _dir;
 //var _dir ='D:\\';
 var res = "";
 var FolderInfo = new Array();
