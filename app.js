@@ -263,6 +263,7 @@ function Push(){
   exec('git push test2 master',function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリへアップロードしました";
+      alert("リモートリポジトリへアップロードしました");
     }
   });
 }
@@ -272,6 +273,7 @@ function Pull(){
   exec('git pull test2 master', function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリから同期しました";
+      alert("リモートリポジトリから同期しました");
     }
   });
 }
