@@ -25,7 +25,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 800, height: 600});
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   //Developツール表示
-  mainWindow.webContents.openDevTools();
+//  mainWindow.webContents.openDevTools();
   // ウィンドウが閉じられたらアプリも終了
   mainWindow.on('closed', function() {
     mainWindow = null;

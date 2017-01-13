@@ -229,6 +229,22 @@ function Commit(){
           });
 }
 
+//git add の実行処理
+function AddTmp(){
+    /* 変更を検知した場合コミット処理実行*/
+            exec('git add --all ' + _dir + "\\", function (error, stdout, stderr) {
+                    if (error == null) {
+                      CommitTmp();
+                    }
+                });
+}
+function CommitTmp(){
+  var d = new Date();
+  exec('git commit -m "' + d.toLocaleString() + '"' + _dir + "\\", function (error, stdout, stderr) {
+      });
+      alert("差分を保存しました");
+}
+
 
 //リモートリポジトリのセット
 function SetRepo(){
