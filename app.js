@@ -224,6 +224,7 @@ function Commit(){
                 result = 'Success.' + "カレントディレクトリ以下で更新があったファイルの差分を保存しました.";
               }else{
                 result = 'Exec error: ' + error +'<br>';
+                alert("画面右下の変更点記入欄を入力してください");
               }
               document.getElementById('footer').innerHTML = result;
           });
