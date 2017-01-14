@@ -223,6 +223,7 @@ function Commit(){
   var detail = document.getElementById('c_det').value;
       exec('git commit -m "' + detail + '" ' + _dir + "\\", function (error, stdout, stderr) {
               if (error == null) {
+                Merge01();
                 result = 'Success.' + "カレントディレクトリ以下で更新があったファイルの差分を保存しました.";
               }else{
                 result = 'Exec error: ' + error +'<br>';
@@ -230,6 +231,24 @@ function Commit(){
               }
               document.getElementById('footer').innerHTML = result;
           });
+}
+function Merge01(){
+  exec('git checkout master',function(error, stdout, stderr){
+    if(error == null){
+      Merge02();
+    }
+  });
+}
+function Merge02(){
+  exec('git merge beta',function(error, stdout, stderr){
+    if(error == null){
+      Merge03();
+    }
+  });
+}
+function Merge03(){
+  exec('git checkout beta',function(error, stdout, stderr){
+  });
 }
 
 //git add の実行処理
@@ -259,9 +278,14 @@ function AddFirst(){
 function CommitFirst(){
   exec('git commit -m "Origin Commit"', function (error, stdout, stderr) {
       if(error == null){
+        ChkOut_B_First();
               location.reload();
       }
     });
+}
+function ChkOut_B_First(){
+  exec('git checkout -b beta',function(error, stdout, stderr){
+  });
 }
 
 //リモートリポジトリのセット
@@ -278,10 +302,11 @@ function SetRepo(){
 
 //リモートリポジトリへPushする
 function Push(){
+  alert("リモートリポジトリへアップロードします\nしばらくお待ちください");
   exec('git push test2 master',function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリへアップロードしました";
-      alert("リモートリポジトリへアップロードしました");
+      alert("リモートリポジトリへのアップロードが完了しました");
     }
   });
 }
