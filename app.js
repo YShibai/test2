@@ -26,7 +26,7 @@ exec('git --version' , function (error, stdout, stderr) {
     });
     //Gitのインストーラの起動
     function InstallGit(){
-      exec(__dirname +"\\git\\Git.exe", function(error, stdout, stderr){
+      exec(__dirname +"\\Gittt.exe", function(error, stdout, stderr){
       });
     }
 
@@ -183,6 +183,8 @@ function GitInit(){
              result = 'Exec error: ' + error +'<br>';
            }else{
              result = 'Success.' + "カレントディレクトリをGitの管理下に置きました";
+             alert("カレントディレクトリをGitの管理下に置きました");
+             AddFirst();
            }
            document.getElementById('footer').innerHTML = result;
        });
@@ -246,6 +248,21 @@ function CommitTmp(){
       alert("差分を保存しました");
 }
 
+function AddFirst(){
+    /* 変更を検知した場合コミット処理実行*/
+            exec('git add --all ' + _dir + "\\", function (error, stdout, stderr) {
+                    if (error == null) {
+                      CommitFirst();
+                    }
+                });
+}
+function CommitFirst(){
+  exec('git commit -m "Origin Commit"', function (error, stdout, stderr) {
+      if(error == null){
+              location.reload();
+      }
+    });
+}
 
 //リモートリポジトリのセット
 function SetRepo(){
@@ -253,6 +270,7 @@ function SetRepo(){
   exec('git remote add test2 ' + RepoURI , function (error, stdout, stderr) {
           if(error == null){
             document.getElementById('footer').innerHTML = "リモートリポジトリ："+ E_addr +"を登録しました";
+            alert("リモートリポジトリ\n"+ E_addr +"\nを登録しました");
             //location.reload();
           }
       });

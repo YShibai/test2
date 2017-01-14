@@ -90,7 +90,7 @@
   <script>
   //GitHubアカウント登録画面
   function SignUpGH(){
-    document.getElementById('det_zone').innerHTML = "<webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='登録' onClick='SetRepo()'><br></form>";
+    document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。必要事項を入力してアカウントを作りましょう。その時にリモートリポジトリを作成し、リポジトリのURLをコピーしましょう。ステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
   }
   </script>
 GitHub未登録の場合,<font color='#ff0000'><a href='javascript:SignUpGH()'>ココ</a></font>から登録しよう！<br>
