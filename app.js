@@ -40,6 +40,7 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
    document.getElementById('chk_hub').innerHTML = "GitHub未登録の場合," + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
  }else{
    document.getElementById('chk_hub').innerHTML = "<br><br>";
+   FirstPull();
  }
   if(err == null){
   document.getElementById('footer').innerHTML = err;
@@ -62,7 +63,31 @@ function SetRepo(){
           }
       });
 }
-
+function FirstPull(){
+  exec('git checkout master',function(error, etdout, stderr){
+    if(error ==null){
+      FirstPull2();
+    }
+  });
+}
+function FirstPull2(){
+  exec('git pull test2 master',function(error, etdout, stderr){
+    if(error ==null){
+      FirstPull3();
+    }
+  });
+}
+function FirstPull3() {
+  exec('git checkout beta',function(error, etdout, stderr){
+    if(error ==null){
+      FirstPull4();
+    }
+  });
+}
+function FirstPull4() {
+  exec('git merge master',function(error, etdout, stderr){
+  });
+}
 
 // 指定ディレクトリを検索して一覧を表示
 (function(){
