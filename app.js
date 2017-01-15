@@ -1,4 +1,3 @@
-//Gitが導入されているかの確認
 exec('git --version' , function (error, stdout, stderr) {
         if(stdout){
           result = stdout + "がインストールされています.";
@@ -26,51 +25,96 @@ exec('git --version' , function (error, stdout, stderr) {
     });
     //Gitのインストーラの起動
     function InstallGit(){
-      exec(__dirname +"\\git\\Git.exe", function(error, stdout, stderr){
+      exec(__dirname +"\\Gittt.exe", function(error, stdout, stderr){
+        if(error == null){
+          alert("途中の\n「Configuring the terminal emulator to use with Git Bash」では\n「Use Windows'default console window」を選択してください.\nその他はnextで何も変更はありません.");
+          alert("インストールが終了したらPCを再起動してください.");
+        }
       });
     }
-
+FsFirst();
 
 //GitHubアカウントの新規登録画面の処理
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
-  var str = text;
-   str = str.replace(/\r\n/g, "<br />");
-   str = str.replace(/(\n|\r)/g, "<br />");
-  if(str == 0){
+  if(text == 0){
    document.getElementById('chk_hub').innerHTML = "GitHub未登録の場合," + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
-  }
+ }else{
+   document.getElementById('chk_hub').innerHTML = "<br><br>";
+   FirstPull();
+ }
   if(err == null){
   document.getElementById('footer').innerHTML = err;
  }
 });
-
+//GitHubアカウント登録画面
+function SignUpGH(){
+  document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。\n必要事項を入力してアカウントを作りましょう。\n仮登録のメールが届くので、メール内のhttpsから始まるURLを\n別のブラウザで開いてください。\n開いたら「Start a Project」を選択してください.\n「Create a new repository」において「Repository name」を任意の半角英数字で入力してください.他の項目はいじらず、下部の「Create repository」ボタンを押してください.\nするとリモートリポジトリの完成です。\n次に「Quick setup — if you’ve done（省略）」と表示されている下にあるhttpsから始まるURLをコピーしてください。\nURLのコピーはステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
+}
+//リモートリポジトリのセット
+function SetRepo(){
+  var RepoURI = document.repo.Reposit.value;
+  exec('git -C '+ _dir +' remote add test2 ' + RepoURI , function (error, stdout, stderr) {
+          if(error == null){
+            fs.writeFileSync(__dirname+"\\"+"chk_acount.txt", "1");
+            document.getElementById('footer').innerHTML = "リモートリポジトリ："+ RepoURI +"を登録しました";
+            alert("リモートリポジトリ\n"+ RepoURI +"\nを登録しました");
+            alert("さあ準備が整いました. Gitを活用しましょう");
+            location.reload();
+          }
+      });
+}
+function FirstPull(){
+  exec('git -C '+ _dir +' checkout master',function(error, etdout, stderr){
+    if(error ==null){
+      FirstPull2();
+    }
+  });
+}
+function FirstPull2(){
+  exec('git -C '+ _dir +' pull test2 master',function(error, etdout, stderr){
+    if(error ==null){
+      FirstPull3();
+    }
+  });
+}
+function FirstPull3() {
+  exec('git -C '+ _dir +' checkout beta',function(error, etdout, stderr){
+    if(error ==null){
+      FirstPull4();
+    }
+  });
+}
+function FirstPull4() {
+  exec('git -C '+ _dir +' merge master',function(error, etdout, stderr){
+  });
+}
 
 // 指定ディレクトリを検索して一覧を表示
-(function(){
+function FsFirst(){
   _dir = fs.readFileSync(__dirname+"\\"+"last_dir.txt");
   fs.readdir(_dir, function(err, files){
     files.forEach(function(file){
         var _type = "";
         if(fs.statSync(_dir + "\\" + file).isFile()){
-            _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
-            res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
+            _type = "<img src='./ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+            res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
         }else{
-            _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
+            _type = "<img src='./ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
             res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
         }
     });
       //Gitの管轄下であるかをチェック
-      exec('git status ' + _dir , function (error, stdout, stderr) {
+      exec('git -C ' + _dir + ' status', function (error, stdout, stderr) {
               if (error != null) {
-                document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
+                document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
               }else{
-                document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+                document.getElementById('Init_Info').innerHTML = "<img src='./Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
               }
           });
         document.getElementById('res1').innerHTML = _dir　+ "";
         document.getElementById('res2').innerHTML = res;
   });
-})();
+}
 
 
 //ファイルをアプリ内に読み込んで表示させる.
@@ -172,7 +216,7 @@ function saveNewFile() {
 //git init の実行処理
 function GitInit(){
   result ="";
-   exec('git init ' + _dir, function (error, stdout, stderr) {
+   exec('git -C ' + _dir + ' init', function (error, stdout, stderr) {
            if(stdout){
                result = 'stdout: ' + stdout +'<br>';
            }
@@ -183,6 +227,8 @@ function GitInit(){
              result = 'Exec error: ' + error +'<br>';
            }else{
              result = 'Success.' + "カレントディレクトリをGitの管理下に置きました";
+             alert("カレントディレクトリをGitの管理下に置きました");
+             AddFirst();
            }
            document.getElementById('footer').innerHTML = result;
        });
@@ -203,7 +249,7 @@ function Add(){
     		function (respnse) {
     			/* OKボタン(ボタン配列の0番目がOK)*/
     			if (respnse == 0) {
-            exec('git add --all ' + _dir + "\\", function (error, stdout, stderr) {
+            exec('git -C '+ _dir +' add --all', function (error, stdout, stderr) {
                     if (error == null) {
                       Commit();
                     }else{
@@ -219,8 +265,9 @@ function Add(){
 //git commit の実行処理
 function Commit(){
   var detail = document.getElementById('c_det').value;
-      exec('git commit -m "' + detail + '" ' + _dir + "\\", function (error, stdout, stderr) {
+      exec('git -C '+ _dir +' commit -m "' + detail + '"', function (error, stdout, stderr) {
               if (error == null) {
+                Merge01();
                 result = 'Success.' + "カレントディレクトリ以下で更新があったファイルの差分を保存しました.";
               }else{
                 result = 'Exec error: ' + error +'<br>';
@@ -229,11 +276,32 @@ function Commit(){
               document.getElementById('footer').innerHTML = result;
           });
 }
+function Merge01(){
+  exec('git -C '+ _dir +' checkout master',function(error, stdout, stderr){
+    if(error == null){
+      Merge02();
+    }
+  });
+}
+function Merge02(){
+  exec('git -C '+ _dir +' merge beta',function(error, stdout, stderr){
+    if(error == null){
+      Merge03();
+    }
+  });
+}
+function Merge03(){
+  exec('git -C '+ _dir +' checkout beta',function(error, stdout, stderr){
+    if(error == null){
+      alert("ファイルの差分を保存しました.");
+    }
+  });
+}
 
 //git add の実行処理
 function AddTmp(){
     /* 変更を検知した場合コミット処理実行*/
-            exec('git add --all ' + _dir + "\\", function (error, stdout, stderr) {
+            exec('git -C '+ _dir +' add --all', function (error, stdout, stderr) {
                     if (error == null) {
                       CommitTmp();
                     }
@@ -241,36 +309,87 @@ function AddTmp(){
 }
 function CommitTmp(){
   var d = new Date();
-  exec('git commit -m "' + d.toLocaleString() + ' の時点の状態"', function (error, stdout, stderr) {
+  exec('git -C '+ _dir +' commit -m "' + d.toLocaleString() + ' の時点の状態"', function (error, stdout, stderr) {
       });
       alert("差分を保存しました");
 }
 
+function AddFirst(){
+    /* 変更を検知した場合コミット処理実行*/
+            exec('git -C '+ _dir +' add --all', function (error, stdout, stderr) {
+                    if (error == null) {
+                      CommitFirst();
+                    }
+                });
+}
+function CommitFirst(){
+  exec('git -C '+ _dir +' commit -m "Origin Commit"', function (error, stdout, stderr) {
+      if(error == null){
+        ChkOut_B_First();
+              location.reload();
+      }
+    });
+}
+function ChkOut_B_First(){
+  exec('git -C '+ _dir +' checkout -b beta',function(error, stdout, stderr){
+  });
+}
 
-//リモートリポジトリのセット
-function SetRepo(){
-  var RepoURI = document.repo.Reposit.value;
-  exec('git remote add test2 ' + RepoURI , function (error, stdout, stderr) {
+//前のコミット段階のデータとの差分比較
+function Diff(F_Name){
+  exec('git -C '+ _dir +' diff '+ _dir + '\\' + F_Name, function (error, stdout, stderr) {
           if(error == null){
-            document.getElementById('footer').innerHTML = "リモートリポジトリ："+ E_addr +"を登録しました";
-            //location.reload();
+            var re = /[@][@].[-](.*?),(.*?)\+(.*?),(.*?)[@][@]/g;
+            var match = stdout.match(re);
+            var re2 = /[@][@].[-](.*?),(.*?)\+(.*?),(.*?)[@][@]/;
+            var i = 0;
+            var match2 = new Array();
+            while(i<match.length){
+            match2[i] = match[i].match(re2);
+            i++;
+          }
+          var DiffInfo = match.length + "箇所に変更があります。\n";
+          var DiffInfo2 = "";
+          var j =0;
+          while(j<match.length){
+            DiffInfo2 +=j+1 +"箇所目は変更前に"+ match2[j][1] + "行目から" + match2[j][2] + "行分あったところが、変更により";
+            if(match2[j][4]-match2[j][2] < 0){
+              DiffInfo2 += Math.abs(match2[j][4]-match2[j][2]) + "行減少しました。\n";
+            }else if (match2[j][4]-match2[j][2] > 0) {
+              DiffInfo2 += Math.abs(match2[j][4]-match2[j][2]) + "行増加しました。\n";
+            }else{
+              DiffInfo2 += "行数の変化はありませんが、中身が書き換わっています。\n";
+            }
+            j++;
+          }
+              document.getElementById('title').innerHTML = "<b>＜差分＞</b><br>"
+              document.getElementById('edit_zone').innerText = DiffInfo+DiffInfo2+stdout;
+              document.getElementById('footer').innerHTML = "Load Success.";
           }
       });
 }
 
 //リモートリポジトリへPushする
 function Push(){
-  exec('git push test2 master',function(error, stdout, stderr){
+  alert("リモートリポジトリへアップロードします\nしばらくお待ちください");
+  exec('git -C '+ _dir +' push test2 master',function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリへアップロードしました";
-      alert("リモートリポジトリへアップロードしました");
+      alert("リモートリポジトリへのアップロードが完了しました");
     }
   });
 }
 
 //リモートリポジトリからPullする
 function Pull(){
-  exec('git pull test2 master', function(error, stdout, stderr){
+  exec('git -C '+ _dir +' pull test2 master', function(error, stdout, stderr){
+    if(error == null){
+      Pull2();
+    }
+  });
+}
+function Pull2(){
+  exec('git -C '+ _dir +' merge master', function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリから同期しました";
       alert("リモートリポジトリから同期しました");
@@ -281,7 +400,7 @@ function Pull(){
 
 //ひとつ前のコミット状態へ戻す（reset）
 function Reset(){
-  exec('git reset --hard HEAD^', function(error, stdout, stderr){
+  exec('git -C '+ _dir +' reset --hard HEAD^', function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "最新のコミット時の状態に戻りました";
     }
@@ -314,20 +433,20 @@ function SubDir(currentD){
         files.forEach(function(file){
             var _type = "";
             if(fs.statSync(_dir + "\\" + file).isFile()){
-              _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
-              res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
+              _type = "<img src='./ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+              res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
               //_type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
             }else{
-              _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
+              _type = "<img src='./ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
               res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
             }
         });
         //Gitの管轄下であるかをチェック
-        exec('git status ' + _dir , function (error, stdout, stderr) {
+        exec('git -C '+ _dir +' status', function (error, stdout, stderr) {
                 if (error != null) {
-                  document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
+                  document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
                 }else{
-                  document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+                  document.getElementById('Init_Info').innerHTML = "<img src='./Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
                 }
             });
             document.getElementById('res1').innerHTML = _dir;
@@ -358,20 +477,20 @@ function UpDir(){
           files.forEach(function(file){
               var _type = "";
               if(fs.statSync(_dir + "\\" + file).isFile()){
-                _type = "<img src='./file1/ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
-                res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./file1/compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
+                _type = "<img src='./ico_file1a_02.gif' onClick='OpenFile("+ "\"" + file + "\"" + ")'>";
+                res += _type + "<a href='javascript:void(0)' onClick='OpenFile("+ "\"" + file + "\"" + ")'>" + file +　"</a>" + " <img src='./compare01.png' onClick='Diff("+ "\"" + file + "\"" + ")' title='前回のコミット時からの差分を比較します'>" + "<br>";
                 //_type + "<a href='javascript:void(0)' onClick='OpenFile()'>" + file + "<br>";
               }else{
-                _type = "<img src='./folder4/ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
+                _type = "<img src='./ico_folder4_1.gif' onClick='SubDir("+ "\"" + file + "\"" + ")'>";
                 res += _type + "<a href='javascript:void(0)' onClick='SubDir("+ "\"" + file + "\"" + ")'>" +file + "</a>" + "<br>";
               }
           });
           //Gitの管轄下であるかをチェック
-          exec('git status ' + _dir , function (error, stdout, stderr) {
+          exec('git -C '+ _dir +' status', function (error, stdout, stderr) {
                   if (error != null) {
-                    document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./folder4/Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
+                    document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
                   }else{
-                    document.getElementById('Init_Info').innerHTML = "<img src='./folder4/Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
+                    document.getElementById('Init_Info').innerHTML = "<img src='./Git_OK_32.png'><span style='background-color: #47ea7e;'><strong>カレントディレクトリはGitの管轄下にあります</strong></span>";
                   }
               });
               document.getElementById('res1').innerHTML = _dir;
