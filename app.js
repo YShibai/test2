@@ -376,6 +376,8 @@ function Push(){
     if(error == null){
       document.getElementById('footer').innerHTML = "リモートリポジトリへアップロードしました";
       alert("リモートリポジトリへのアップロードが完了しました");
+    }else{
+      alert("リモートリポジトリの登録が行われていません．\nリモートリポジトリの登録を行いましょう");
     }
   });
 }
