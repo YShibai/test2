@@ -33,7 +33,7 @@ exec('git --version' , function (error, stdout, stderr) {
         }
       });
     }
-
+FsFirst();
 
 //GitHubアカウントの新規登録画面の処理
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
@@ -91,7 +91,7 @@ function FirstPull4() {
 }
 
 // 指定ディレクトリを検索して一覧を表示
-(function(){
+function FsFirst(){
   _dir = fs.readFileSync(__dirname+"\\"+"last_dir.txt");
   fs.readdir(_dir, function(err, files){
     files.forEach(function(file){
@@ -115,7 +115,7 @@ function FirstPull4() {
         document.getElementById('res1').innerHTML = _dir　+ "";
         document.getElementById('res2').innerHTML = res;
   });
-})();
+}
 
 
 //ファイルをアプリ内に読み込んで表示させる.
@@ -293,6 +293,9 @@ function Merge02(){
 }
 function Merge03(){
   exec('git -C '+ _dir +' checkout beta',function(error, stdout, stderr){
+    if(error == null){
+      alert("ファイルの差分を保存しました.");
+    }
   });
 }
 
