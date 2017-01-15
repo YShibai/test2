@@ -31,8 +31,8 @@ function LastCommit(){
 function LastCommit2(){
   var d = new Date();
   exec('git commit -m "' + d.toLocaleString() + ' の時点の状態"', function (error, stdout, stderr) {
-    if(error == null){
-          app.quit();      
+    if(error == null || error != null){
+          app.quit();
     }
   });
 }
