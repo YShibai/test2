@@ -105,7 +105,7 @@ function FsFirst(){
         }
     });
       //Gitの管轄下であるかをチェック
-      exec('git ' + _dir + ' status', function (error, stdout, stderr) {
+      exec('git -C ' + _dir + ' status', function (error, stdout, stderr) {
               if (error != null) {
                 document.getElementById('Init_Info').innerHTML = "<span style='background-color: #e598c5;'><strong>このカレントディレクトリはGitで管理されていません</strong></span><br><img src='./Git_Init_32.png' onClick='GitInit()'>" + "<a href='javascript:void(0)' onClick='GitInit()'><b>このフォルダ以下をGitの管轄下に置く</b></a>";
               }else{
