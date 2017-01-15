@@ -35,11 +35,30 @@ exec('git --version' , function (error, stdout, stderr) {
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   if(text == 0){
    document.getElementById('chk_hub').innerHTML = "GitHub未登録の場合," + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
-  }
+ }else{
+   document.getElementById('chk_hub').innerHTML = "<br><br>";
+ }
   if(err == null){
   document.getElementById('footer').innerHTML = err;
  }
 });
+//GitHubアカウント登録画面
+function SignUpGH(){
+  document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。必要事項を入力してアカウントを作りましょう。その時にリモートリポジトリを作成し、リポジトリのURLをコピーしましょう。ステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
+}
+//リモートリポジトリのセット
+function SetRepo(){
+  var RepoURI = document.repo.Reposit.value;
+  exec('git remote add test2 ' + RepoURI , function (error, stdout, stderr) {
+          if(error == null){
+            fs.writeFileSync(__dirname+"\\"+"chk_acount.txt", "1");
+            document.getElementById('footer').innerHTML = "リモートリポジトリ："+ RepoURI +"を登録しました";
+            alert("リモートリポジトリ\n"+ RepoURI +"\nを登録しました");
+            alert("さあ準備が整いました. Gitを活用しましょう");
+            location.reload();
+          }
+      });
+}
 
 
 // 指定ディレクトリを検索して一覧を表示
@@ -285,17 +304,6 @@ function ChkOut_B_First(){
   });
 }
 
-//リモートリポジトリのセット
-function SetRepo(){
-  var RepoURI = document.repo.Reposit.value;
-  exec('git remote add test2 ' + RepoURI , function (error, stdout, stderr) {
-          if(error == null){
-            document.getElementById('footer').innerHTML = "リモートリポジトリ："+ E_addr +"を登録しました";
-            alert("リモートリポジトリ\n"+ E_addr +"\nを登録しました");
-            //location.reload();
-          }
-      });
-}
 
 //リモートリポジトリへPushする
 function Push(){
