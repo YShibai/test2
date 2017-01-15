@@ -1,4 +1,3 @@
-//Gitが導入されているかの確認
 exec('git --version' , function (error, stdout, stderr) {
         if(stdout){
           result = stdout + "がインストールされています.";
