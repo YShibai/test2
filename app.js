@@ -29,6 +29,7 @@ exec('git --version' , function (error, stdout, stderr) {
       exec(__dirname +"\\Gittt.exe", function(error, stdout, stderr){
         if(error == null){
           alert("途中の\n「Configuring the terminal emulator to use with Git Bash」では\n「Use Windows'default console window」を選択してください.\nその他はnextで何も変更はありません.");
+          alert("インストールが終了したらPCを再起動してください.");
         }
       });
     }
