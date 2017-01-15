@@ -320,7 +320,12 @@ function Pull(){
   });
 }
 function Pull2(){
-
+  exec('git merge master', function(error, stdout, stderr){
+    if(error == null){
+      document.getElementById('footer').innerHTML = "リモートリポジトリから同期しました";
+      alert("リモートリポジトリから同期しました");
+    }
+  });
 }
 
 
