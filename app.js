@@ -37,7 +37,7 @@ FsFirst();
 //GitHubアカウントの新規登録画面の処理
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   if(text == 0){
-   document.getElementById('chk_hub').innerHTML = "GitHub未登録の場合," + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
+   document.getElementById('chk_hub').innerHTML = "準備その３．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
  }else{
    document.getElementById('chk_hub').innerHTML = "<br><br>";
    FirstPull();
@@ -48,7 +48,7 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
 });
 //GitHubアカウントの登録画面
 function SignUpGH(){
-  document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。\n必要事項を入力してアカウントを作りましょう。\n仮登録のメールが届くので、メール内のhttpsから始まるURLを\n別のブラウザで開いてください。\n開いたら「Start a Project」を選択してください.\n「Create a new repository」において「Repository name」を任意の半角英数字で入力してください.他の項目はいじらず、下部の「Create repository」ボタンを押してください.\nするとリモートリポジトリの完成です。\n次に「Quick setup — if you’ve done（省略）」と表示されている下にあるhttpsから始まるURLをコピーしてください。\nURLのコピーはステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
+  document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録（既にリモートリポジトリを持ってる人はスキップ可）<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。<br>必要事項を入力してアカウントを作りましょう。<br>仮登録のメールが届くので、メール内のhttpsから始まるURLを<br>別のブラウザで開いてください。<br>開いたら「Start a Project」を選択してください.<br>「Create a new repository」において「Repository name」を任意の半角英数字で入力してください.他の項目はいじらず、下部の「Create repository」ボタンを押してください.<br>するとリモートリポジトリの完成です。<br>次に「Quick setup — if you’ve done（省略）」と表示されている下にあるhttpsから始まるURLをコピーしてください。<br>URLのコピーはステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br>また，ステップ１をスキップしたリモートリポジトリ持ちの人は、登録したいリポジトリURLを入力して登録してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
 }
 //リモートリポジトリのセット
 function SetRepo(){
@@ -59,6 +59,7 @@ function SetRepo(){
             document.getElementById('footer').innerHTML = "リモートリポジトリ："+ RepoURI +"を登録しました";
             alert("リモートリポジトリ\n"+ RepoURI +"\nを登録しました");
             alert("さあ準備が整いました. Gitを活用しましょう");
+            alert("最後に、アプリケーションが再読み込みされます\nその後，画面左上のコミットの注意点をよく読んでください");
             location.reload();
           }
       });
