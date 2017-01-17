@@ -12,7 +12,6 @@ exec('git --version' , function (error, stdout, stderr) {
               buttons: ['はい', 'いいえ'],
               detail: 'Gitがインストールされていません.インストーラを起動しますか？'
             },
-            /* メッセージボックスが閉じられた後のコールバック関数*/
             function (respnse) {
               /* OKボタン(ボタン配列の0番目がOK)*/
               if (respnse == 0) {
@@ -25,10 +24,11 @@ exec('git --version' , function (error, stdout, stderr) {
     });
     //Gitのインストーラの起動
     function InstallGit(){
+          alert("途中の\n「Configuring the terminal emulator to use with Git Bash」では\n「Use Windows'default console window」を選択してください.\nその他はnextで何も変更はありません.");
       exec(__dirname +"\\Gittt.exe", function(error, stdout, stderr){
         if(error == null){
-          alert("途中の\n「Configuring the terminal emulator to use with Git Bash」では\n「Use Windows'default console window」を選択してください.\nその他はnextで何も変更はありません.");
           alert("インストールが終了したらPCを再起動してください.");
+　　　　　　alert("再起動後，再びアプリケーションを起動してください．");
         }
       });
     }
@@ -46,7 +46,7 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   document.getElementById('footer').innerHTML = err;
  }
 });
-//GitHubアカウント登録画面
+//GitHubアカウントの登録画面
 function SignUpGH(){
   document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。\n必要事項を入力してアカウントを作りましょう。\n仮登録のメールが届くので、メール内のhttpsから始まるURLを\n別のブラウザで開いてください。\n開いたら「Start a Project」を選択してください.\n「Create a new repository」において「Repository name」を任意の半角英数字で入力してください.他の項目はいじらず、下部の「Create repository」ボタンを押してください.\nするとリモートリポジトリの完成です。\n次に「Quick setup — if you’ve done（省略）」と表示されている下にあるhttpsから始まるURLをコピーしてください。\nURLのコピーはステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
 }
