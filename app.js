@@ -39,7 +39,7 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
    document.getElementById('chk_hub').innerHTML = "準備その３．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
  }else{
    document.getElementById('res0').innerHTML = "";
-   document.getElementById('chk_name').innerHTML = "<a href='javascript:void(0)' onClick='InfoView()'>システム情報を見る</a>";
+   document.getElementById('chk_name').innerHTML = "";
    document.getElementById('chk_address').innerHTML = "";
    document.getElementById('chk_hub').innerHTML = "<br><br>";
    FirstPull();
@@ -48,10 +48,6 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   document.getElementById('footer').innerHTML = err;
  }
 });
-
-function InfoView(){
-  alert('GitVersion：'+ SysInfo + '\nユーザ名：'+ Info_Name + '\nE-Mail：' + Info_Email);
-}
 
 //GitHubアカウントの登録画面
 function SignUpGH(){
