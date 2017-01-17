@@ -47,6 +47,9 @@
 <div id="f_list">
     <script src="app.js"></script>
 <div id="res0">ver...</div>
+<div id="commit"><a href="javascript:alert('一時コミット：ファイルの変更が中途半端な場合に押す差分保存ボタンです\nこれはメニューの「サーバにアップ」ボタンを押しても\nアップロードされません\n\n最終コミット：編集したファイル内容の切りが良い場合に押す差分保存ボタンです\nメニューの「サーバにアップ」を押すとアップロードされ、他の編集者に同期される対象となります');">＜一時コミット・最終コミットの違い＞</a><br><b>＜最終コミットの際の変更点記入欄＞</b><img src='./qes.png' onClick='javascript:alert("差分の保存メニューを押す前にココへ以前からの変更点を大まかに記入してください\n例）○○○を実装, xxxのバグを修正 etc");'><br>
+  <textarea id="c_det" cols="40" rows="2"></textarea>
+</div>
 <div id="chk_name"></div>
 <div id="chk_address"></div>
 <div id="chk_hub"></div>
@@ -66,9 +69,6 @@
 <div id='footer_fixed'></div>
 <div id='input_area'>
   <textarea id="edit_zone" cols="50" rows="20"></textarea>
-</div>
-<div id="commit"><b>＜最終コミットの際の変更点記入欄＞</b><br>差分の保存メニューを押す前にココへ以前からの変更点を大まかに記入してください<br>例）○○○を実装, xxxのバグを修正 etc<br>
-  <textarea id="c_det" cols="40" rows="3"></textarea>
 </div>
 </div>
 
