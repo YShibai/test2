@@ -21,7 +21,7 @@ exec('git --version' , function (error, stdout, stderr) {
           );
         }
     });
-    //Gitのインストーラの起動
+
     function InstallGit(){
           alert("途中の\n「Configuring the terminal emulator to use with Git Bash」では\n「Use Windows'default console window」を選択してください.\nその他はnextで何も変更はありません.");
       exec(__dirname +"\\Gittt.exe", function(error, stdout, stderr){
@@ -33,7 +33,7 @@ exec('git --version' , function (error, stdout, stderr) {
     }
 FsFirst();
 
-//GitHubアカウントの新規登録画面の処理
+//GitHubアカウントの新規登録画面処理
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   if(text == 0){
    document.getElementById('chk_hub').innerHTML = "準備その３．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
