@@ -1,0 +1,125 @@
+@charset "utf-8";
+/*============================================
+全般的なスタイル
+============================================*/
+* {
+	margin:0; padding:0; 	/*全要素のマージン・パディングをリセット*/
+	line-height:1.5;	/*全要素の行の高さを1.5倍にする*/
+	color:#333333;		/*文字色*/
+}
+
+body{
+  background-color: #999999; /*ページ全体の背景色*/
+  text-align:center; /*IE6以下でセンタリングするための対策*/
+  font-size:3vmin;
+}
+
+div#pagebody {
+	margin:0 auto;	/*内容全体をセンタリング*/
+	text-align:left;	/*テキストの配置を左揃えにする*/
+	/*background-image:url("images/bg_pagebody.gif");	内容全体の背景*/
+	/*background-repeat:repeat-y;		背景画像を縦方向に繰り返す*/
+	background-color:#ffffff;		/*内容全体の背景色*/
+}
+
+/*============================================
+ヘッダ
+============================================*/
+div#header {
+	height:17%;	/*背景画像のサイズに合わせてボックスの高さを指定*/
+	/*background-image:url("images/bg_header.jpg");	ヘッダ部分の背景画像*/
+	background-repeat:no-repeat;		/*背景画像を繰り返さない*/
+	background-color:#cccccc;		/*ヘッダ部分の背景色*/
+}
+h1 {
+	padding:20px 0px 0px 30px;		/*見出し内容の位置調整*/
+	font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+}
+h1 a {text-decoration:none;} 			/*リンクの下線を無くす*/
+
+
+/*============================================
+メインメニュー
+============================================*/
+ul#menu {
+	height:15%; background-color:#eeeeee; font-weight:bold;
+}
+li#menu01,li#menu02,li#menu03,li#menu04,li#menu05 {
+  background-color:#eeeeee;
+	float:left;			/*リスト項目を横に並べる*/
+	display:inline;			/*リスト項目をインライン表示にする*/
+	list-style-type:none;		/*リストマーカー無しにする*/
+	background-repeat:no-repeat; 	/*背景画像を繰り返さない*/
+  border-top:#333333 solid 1px;
+  border-left:#333333 solid 1px;
+  border-bottom:#333333 solid 1px;
+}
+li#menu05{
+  border-right:#333333 solid 1px;
+}
+
+/*ボタン01～05にはそれぞれ異なる背景画像を指定する*/
+li#menu01 {
+	 width: 19%; height:14.9%;	/*背景画像に合わせたサイズ指定*/
+	/*background-image:url("images/bg_menu01.jpg");	背景画像*/
+  margin-left: 1%;
+}
+li#menu02 {
+   width: 20%; height:14.9%;	/*背景画像に合わせたサイズ指定*/
+	/*background-image:url("images/bg_menu02.jpg");	背景画像*/
+}
+li#menu03 {
+	 width: 20%; height:14.9%;	/*背景画像に合わせたサイズ指定*/
+	/*background-image:url("images/bg_menu03.jpg");	背景画像*/
+}
+li#menu04 {
+	 width: 20%; height:14.9%;	/*背景画像に合わせたサイズ指定*/
+	/*background-image:url("images/bg_menu04.jpg");	背景画像*/
+}
+li#menu05 {
+	 width: 19%; height:14.9%;	/*背景画像に合わせたサイズ指定*/
+	/*background-image:url("images/bg_menu05.jpg");	背景画像*/
+}
+ul#menu a {
+	display:block;				/*リンクをブロック表示にする*/
+	height:14.9%; padding-top:4px; text-align:center;
+	text-decoration:none; 			/*リンクの下線を無くす*/
+	font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+}
+
+
+/*============================================
+左カラム
+============================================*/
+div#f_list {
+  	clear:both;					/*回り込みを解除する*/
+	width:30%;			/*幅の指定*/
+  height: 57%;
+	margin:2% 0px 10px 25px;	/*位置調整（IE6のバグに注意）*/
+  padding-right: 2%;
+	display:inline;			/*IE6のマージン算出のバグ対策*/
+	float:left;			/*カラムを左寄せにする*/
+  border-right:#333333 solid 7px;
+}
+
+/*============================================
+右カラム
+============================================*/
+div#det_zone {
+  height: 57%;
+  width:60%; margin:2% 0px 10px 0px; padding-left:25px;/*幅の指定と位置調整*/
+	float:right;				/*2カラム全体を右寄せにする*/
+	overflow: scroll;
+}
+
+/*============================================
+フッタ
+============================================*/
+div#footer {
+  bottom: 0px;
+	width: 100%; height:5%; text-align:left; padding:5px;
+	clear:both;					/*回り込みを解除する*/
+	/*background-image:url("images/bg_footer.jpg");	フッタ部分の背景画像*/
+	/*background-repeat:no-repeat;			背景画像を繰り返さない*/
+	background-color:#cccccc;			/*フッタ部分の背景色*/
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="imagetoolbar" content="no" />
+        <title>設置サンプル</title>
+        <link rel="stylesheet" type="text/css" href="./sitemapstyler.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="./sitemapstyler2.css" media="screen" />
+        <script type="text/javascript" src="./sitemapstyler.js"></script>
+        <script type="text/javascript" src="./sitemapstyler2.js"></script>
+        <script type="text/javascript">
+            window.onload=function(){
+                sitemapstyler();
+                sitemapstyler2();
+            }
+        </script>
+        <style type="text/css">
+            * {
+                margin:0; padding:0;
+            }
+            body{
+                margin:0 auto; padding:0;
+                background-color:#666;
+                color:#666;
+                font:81%/1.5 verdana,sans-serif;
+                text-align:center;
+            }
+            #wrap {
+                width:500px;
+                margin:0 auto; padding:0;
+                background-color:#fff;
+                text-align:center;
+            }
+            #content {
+                margin:0 20px; padding:0;
+                text-align:left;
+            }
+            #footer {
+                margin:1em 0 0 0; padding:.2em .5em;
+                background-color:#999;
+                color:#fff;
+                font-size:78%;
+                text-align:right;
+            }
+            #footer * {
+                font-style:normal;
+                font-size:100%;
+                color:#fff;
+            }
+            h1 {
+                margin:0 0 1em 0; padding:.5em 1em;
+                background-color:#999;
+                color:#fff;
+                font-size:100%;
+                text-align:left;
+            }
+            h1 a {
+                color:#fff;
+            }
+            h2 {
+                margin:1em 0;
+            }
+            p {
+                margin:1em 0; padding:0;
+            }
+            img {
+                border:0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="wrap">
+            <h1>設置サンプル</h1>
+            <p>参照：<a href="http://cssglobe.com/post.asp?id=903">Sitemap Styler: Style your Sitemaps with CSS and Javascript</a></p>
+            <div id="content">
+                <h2>Example1</h2>
+                <ul id="sitemap">
+                    <li><a href="#">First link</a>
+                        <ul>
+                            <li><a href="#">First link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Second link</a></li>
+                            <li><a href="#">Third link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fourth link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Second link</a>
+                        <ul>
+                            <li><a href="#">First link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Second link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Third link</a></li>
+                            <li><a href="#">Fourth link</a></li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Third link</a>
+                        <ul>
+                            <li><a href="#">First link</a></li>
+                            <li><a href="#">Second link</a></li>
+                            <li><a href="#">Third link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fourth link</a></li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Fourth link</a>
+                        <ul>
+                            <li><a href="#">First link</a></li>
+                            <li><a href="#">Second link</a></li>
+                            <li><a href="#">Third link</a></li>
+                            <li><a href="#">Fourth link</a></li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Fifth link</a>
+                        <ul>
+                            <li><a href="#">First link</a></li>
+                            <li><a href="#">Second link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Third link</a></li>
+                            <li><a href="#">Fourth link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                </ul><!-- div#sitemap -->
+
+                <h2>Example2</h2>
+                <ul id="sitemap2">
+                    <li><a href="#">First link</a>
+                        <ul>
+                            <li><a href="#">First link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Second link</a></li>
+                            <li><a href="#">Third link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fourth link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Second link</a>
+                        <ul>
+                            <li><a href="#">First link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Second link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Third link</a></li>
+                            <li><a href="#">Fourth link</a></li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Third link</a>
+                        <ul>
+                            <li><a href="#">First link</a></li>
+                            <li><a href="#">Second link</a></li>
+                            <li><a href="#">Third link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fourth link</a></li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Fourth link</a>
+                        <ul>
+                            <li><a href="#">First link</a></li>
+                            <li><a href="#">Second link</a></li>
+                            <li><a href="#">Third link</a></li>
+                            <li><a href="#">Fourth link</a></li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Fifth link</a>
+                        <ul>
+                            <li><a href="#">First link</a></li>
+                            <li><a href="#">Second link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Third link</a></li>
+                            <li><a href="#">Fourth link</a>
+                                <ul>
+                                    <li><a href="#">First link</a></li>
+                                    <li><a href="#">Second link</a></li>
+                                    <li><a href="#">Third link</a></li>
+                                    <li><a href="#">Fourth link</a></li>
+                                    <li><a href="#">Fifth link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Fifth link</a></li>
+                        </ul>
+                    </li>
+                </ul><!-- div#sitemap2 -->
+            </div><!-- div#wrap/div#content -->
+        </div><!-- div#wrap -->
+    </body>
+</html>
