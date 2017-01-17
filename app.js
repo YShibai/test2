@@ -39,7 +39,7 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
    document.getElementById('chk_hub').innerHTML = "準備その３．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
  }else{
    document.getElementById('res0').innerHTML = "";
-   document.getElementById('chk_name').innerHTML = "<a href='javascript:alert('GitVersion：'+ SysInfo + '\nユーザ名：'+ Info_Name + '\nE-Mail：' + Info_Email);'>システム情報を見る</a>";
+   document.getElementById('chk_name').innerHTML = "<a href='javascript:void(0)' onClick='InfoView()'>システム情報を見る</a>";
    document.getElementById('chk_address').innerHTML = "";
    document.getElementById('chk_hub').innerHTML = "<br><br>";
    FirstPull();
@@ -48,6 +48,11 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   document.getElementById('footer').innerHTML = err;
  }
 });
+
+function InfoView(){
+  alert('GitVersion：'+ SysInfo + '\nユーザ名：'+ Info_Name + '\nE-Mail：' + Info_Email);
+}
+
 //GitHubアカウントの登録画面
 function SignUpGH(){
   document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録（既にリモートリポジトリを持ってる人はスキップ可）<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。<br>必要事項を入力してアカウントを作りましょう。<br>仮登録のメールが届くので、メール内のhttpsから始まるURLを<br>別のブラウザで開いてください。<br>開いたら「Start a Project」を選択してください.<br>「Create a new repository」において「Repository name」を任意の半角英数字で入力してください.他の項目はいじらず、下部の「Create repository」ボタンを押してください.<br>するとリモートリポジトリの完成です。<br>次に「Quick setup — if you’ve done（省略）」と表示されている下にあるhttpsから始まるURLをコピーしてください。<br>URLのコピーはステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br>また，ステップ１をスキップしたリモートリポジトリ持ちの人は、登録したいリポジトリURLを入力して登録してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
