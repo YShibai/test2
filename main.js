@@ -6,7 +6,7 @@
 //var BrowserWindow = require('browser-window');
 
 //変数(var)ではなく定数(const)で宣言。尚以下の3行は決まり文句の模様
-const electron = require("electron");
+const electron = ;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 let mainWindow;
