@@ -36,7 +36,7 @@ FsFirst();
 //GitHubアカウントの新規登録画面処理
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   if(text == 0){
-   document.getElementById('chk_hub').innerHTML = "準備その３．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
+   document.getElementById('chk_hub').innerHTML = "準備その４．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
  }else{
    document.getElementById('res0').innerHTML = "";
    document.getElementById('chk_name').innerHTML = "";
@@ -298,6 +298,7 @@ function Merge03(){
   exec('git -C '+ _dir +' checkout beta',function(error, stdout, stderr){
     if(error == null){
       alert("ファイルの差分を保存しました.");
+      location.reload();
     }
   });
 }

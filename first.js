@@ -36,22 +36,22 @@ var Info_Email = "";
 //ユーザ名が登録されているかの確認
 exec('git config user.name' , function (error, stdout, stderr) {
         if(stdout){
-          document.getElementById('chk_name').innerHTML = "準備その１．ユーザ名登録<br>ユーザ名："+ stdout +"<br>";
           Info_Name = stdout;
+          document.getElementById('chk_name').innerHTML = "";
         }
         if(error){
-          document.getElementById('chk_name').innerHTML = "ユーザ名が登録されていません.<br><form name='user'><input type='text' name='username' value=''> <input type='button' value='登録' onClick='Name_su()'> <input type='button' value='消去' onClick='clr_Name()'><br></form>";
+          document.getElementById('chk_name').innerHTML = "準備その１．ユーザ名登録<br>ユーザ名が登録されていません.<br><form name='user'><input type='text' name='username' value=''> <input type='button' value='登録' onClick='Name_su()'> <input type='button' value='消去' onClick='clr_Name()'><br></form>";
         }
     });
 
 //メールアドレスが登録されているかの確認
     exec('git config user.email' , function(error, stdout, stderr){
       if(stdout){
-        document.getElementById('chk_address').innerHTML = "準備その２．E-Mail登録<br>E-Mail："+ stdout +"<br>";
         Info_Email = stdout;
+        document.getElementById('chk_address').innerHTML = "";
       }
       if(error){
-        document.getElementById('chk_address').innerHTML = "E-Mailが登録されていません.<br><form name='mail'><input type='text' name='Email' value=''> <input type='button' value='登録' onClick='Email_su()'> <input type='button' value='消去' onClick='clr_Email()'><br></form>";
+        document.getElementById('chk_address').innerHTML = "準備その２．E-Mail登録<br>E-Mailが登録されていません.<br><form name='mail'><input type='text' name='Email' value=''> <input type='button' value='登録' onClick='Email_su()'> <input type='button' value='消去' onClick='clr_Email()'><br></form>";
       }
     });
 
