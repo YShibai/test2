@@ -410,6 +410,8 @@ function Reset(){
   exec('git -C '+ _dir +' reset --hard HEAD^', function(error, stdout, stderr){
     if(error == null){
       document.getElementById('footer').innerHTML = "最新のコミット時の状態に戻りました";
+      alert("最新のコミット時の状態に戻りました");
+      location.reload();
     }
   });
 }
