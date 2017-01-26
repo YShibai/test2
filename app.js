@@ -1,6 +1,6 @@
 exec('git --version' , function (error, stdout, stderr) {
         if(stdout){
-          result = stdout + "がインストールされています.";
+          SysInfo = stdout;
         }
         if(stderr){
         }
@@ -20,9 +20,8 @@ exec('git --version' , function (error, stdout, stderr) {
             }
           );
         }
-        document.getElementById('res0').innerHTML = result;
     });
-    //Gitのインストーラの起動
+
     function InstallGit(){
           alert("途中の\n「Configuring the terminal emulator to use with Git Bash」では\n「Use Windows'default console window」を選択してください.\nその他はnextで何も変更はありません.");
       exec(__dirname +"\\Gittt.exe", function(error, stdout, stderr){
@@ -34,11 +33,14 @@ exec('git --version' , function (error, stdout, stderr) {
     }
 FsFirst();
 
-//GitHubアカウントの新規登録画面の処理
+//GitHubアカウントの新規登録画面処理
 fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   if(text == 0){
-   document.getElementById('chk_hub').innerHTML = "準備その３．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
+   document.getElementById('chk_hub').innerHTML = "準備その４．リモートリポジトリの準備<br>GitHub未登録の場合，" + "<a href='javascript:void(0)' onClick='SignUpGH()'>ココ</a>から登録しよう！";
  }else{
+   document.getElementById('res0').innerHTML = "";
+   document.getElementById('chk_name').innerHTML = "";
+   document.getElementById('chk_address').innerHTML = "";
    document.getElementById('chk_hub').innerHTML = "<br><br>";
    FirstPull();
  }
@@ -46,6 +48,7 @@ fs.readFile(__dirname + "\\" + 'chk_acount.txt', 'utf8', function(err, text){
   document.getElementById('footer').innerHTML = err;
  }
 });
+
 //GitHubアカウントの登録画面
 function SignUpGH(){
   document.getElementById('det_zone').innerHTML = "ステップその１．GitHubの登録（既にリモートリポジトリを持ってる人はスキップ可）<br>複数人でプロジェクトファイルを共有・編集するにはGitHubの登録が必要です。<br>必要事項を入力してアカウントを作りましょう。<br>仮登録のメールが届くので、メール内のhttpsから始まるURLを<br>別のブラウザで開いてください。<br>開いたら「Start a Project」を選択してください.<br>「Create a new repository」において「Repository name」を任意の半角英数字で入力してください.他の項目はいじらず、下部の「Create repository」ボタンを押してください.<br>するとリモートリポジトリの完成です。<br>次に「Quick setup — if you’ve done（省略）」と表示されている下にあるhttpsから始まるURLをコピーしてください。<br>URLのコピーはステップその２で使います<br><webview id='githubSighUp' src='https://github.com/join' style='height:57%;'></webview><br><br>ステップその２．リモートリポジトリの登録<br>下の入力欄にSTEP1でコピーしたURLを貼りつけて登録ボタンを押してください<br>また，ステップ１をスキップしたリモートリポジトリ持ちの人は、登録したいリポジトリURLを入力して登録してください<br><form name='repo'><input type='text' name='Reposit' value=''> <input type='button' value='リモートリポジトリ登録' onClick='SetRepo()'><br></form>";
@@ -295,6 +298,7 @@ function Merge03(){
   exec('git -C '+ _dir +' checkout beta',function(error, stdout, stderr){
     if(error == null){
       alert("ファイルの差分を保存しました.");
+      location.reload();
     }
   });
 }

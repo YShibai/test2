@@ -40,7 +40,7 @@ function LastCommit2(){
 // Electronの初期化完了後に実行
 app.on('ready', function() {
   // メイン画面の表示。ウィンドウの幅、高さを指定できる
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({width: 1280, height: 720});
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   //Developツール表示
 //  mainWindow.webContents.openDevTools();
